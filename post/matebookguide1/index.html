@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<meta name="generator" content="Gridea Pro 1.2.1">
+<title>华为Matebook E Go （8cx Gen3）不完全使用教程（长期更新） | Letmut</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="/favicon.ico?v=1780003967">
+<link rel="stylesheet" href="/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+  <meta name="description" content="作为一台搭载骁龙8cx Gen3的二合一设备来说，它的性能即使放到现在来说也不算过时。又因为windows on arm的对ARM支持的不断改善（25H2已支持对部分AVX指令集的兼容），以及本身的特殊特性（ARM特有的超长续航、二合一触控手写），个人认为它在今天也具有非常好的可玩性和相当的实用性。 设备简评 已经购买的可以跳过不看。 简单来说，如果你遇到如下痛点，那么这台设备&amp;hellip;">
+<meta name="keywords" content="个人博客">
+<link rel="canonical" href="https://sakuraflows.github.io/post/matebookguide1/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"华为Matebook E Go （8cx Gen3）不完全使用教程（长期更新）","url":"https://sakuraflows.github.io/post/matebookguide1/","description":"作为一台搭载骁龙8cx Gen3的二合一设备来说，它的性能即使放到现在来说也不算过时。又因为windows on arm的对ARM支持的不断改善（25H2已支持对部分AVX指令集的兼容），以及本身的特殊特性（ARM特有的超长续航、二合一触控手写），个人认为它在今天也具有非常好的可玩性和相当的实用性。 设备简评 已经购买的可以跳过不看。 简单来说，如果你遇到如下痛点，那么这台设备\u0026hellip;","datePublished":"2026-05-06T02:01:09Z","dateModified":"2026-05-06T02:01:09Z","author":{"@type":"Person","name":"Letmut"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"Letmut"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://sakuraflows.github.io","name":"Letmut","position":1},{"@type":"ListItem","item":"https://sakuraflows.github.io/post/matebookguide1/","name":"华为Matebook E Go （8cx Gen3）不完全使用教程（长期更新）","position":2}]}</script>
+<!-- Clarity tracking code for https://sakuraflows.github.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wmh9rbripm");
+</script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+</head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="/">
+        <img src="/images/avatar.png?v=1780003967" class="site-logo">
+        <h1 class="site-title">Letmut</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/post" class="site-nav">
+            博客
+          </a>
+        
+      
+        
+          <a href="/memos" class="site-nav">
+            闪念
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/links" class="site-nav">
+            友链
+          </a>
+        
+      
+        
+          <a href="null" class="site-nav" target="_blank">
+            程序文档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Welcome to My Blog
+    </div>
+    <div class="site-footer">
+      Powered by Gridea Pro | <a class="rss" href="/feed.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">华为Matebook E Go （8cx Gen3）不完全使用教程（长期更新）</h2>
+            <div class="post-date">2026-05-06</div>
+            
+            <div class="post-content" v-pre>
+              <p>作为一台搭载骁龙8cx Gen3的二合一设备来说，它的性能即使放到现在来说也不算过时。又因为windows on arm的对ARM支持的不断改善（25H2已支持对部分AVX指令集的兼容），以及本身的特殊特性（ARM特有的超长续航、二合一触控手写），个人认为它在今天也具有非常好的可玩性和相当的实用性。</p>
+<h2 id="heading">设备简评</h2>
+<p>已经购买的可以跳过不看。</p>
+<p>简单来说，如果你遇到如下痛点，那么这台设备对你来说几乎是最适合的：</p>
+<ul>
+<li>对安卓模拟器运行galgame的兼容度不满意。</li>
+</ul>
+<p>这台设备几乎可以运行所有的galgame，少部分在打满c++运行库后也可以运行，被称为旮娄神机一点都不过分。（你猜我为什么买它）</p>
+<ul>
+<li>中度文档办公，PPT汇报，网课，投屏书写，表格办公</li>
+</ul>
+<p>不要被现在市面上吹捧安卓平板办公能力的评测骗了，这些评测本质上都是在制造需求而不是满足需求，但凡用安卓平板打开文档调个GBK字体，设置下稍微复杂的ppt或者打开一个doc文件、带公式或者宏的表格就老实了，文字办公这一块有且只有windows设备胜任。<br />
+上面之所以不写重度办公并不是因为性能或者兼容性问题，而是它的只有12寸的屏幕，并列窗口打开多个文档时会稍显逼仄。假设你习惯用小屏（14或13寸）笔记本的话，我想在它上面进行重度办公也不是不行。</p>
+<ul>
+<li>使用VS Code，进行远程ssh等轻度开发向操作。</li>
+</ul>
+<p>甚至开WSL2编译kernel都不是什么问题。</p>
+<br>
+<br>
+<p>当然这台设备也有以下巨坑（不限于以下几点）：</p>
+<ul>
+<li>ARM上转译运行x86程序的兼容性问题。这其中最大的坑又当属于不支持x86、x64内核模式驱动兼容运行。这意味着大多数的老旧款打印机，芯片和其它类型的非通用协议（需要额外装驱动的那种）设备都不能运行。</li>
+</ul>
+<p>但理论上其实可以通过WSL2+CUPS（通用unix打印系统）、虚拟机直通等方案间接实现间接支持。另外ADB（安卓调试桥）是可以用的。<br />
+总之，你的设备是否能兼容ARM设备取决于是否有ARM架构的驱动，如果你不知道的话，那大概率就是没有。</p>
+<ul>
+<li>
+<p>matebook e go的包括触摸屏、手写笔在内的大多数驱动都是x86架构，转译运行在设备上，这意味着流畅度的降低、耗电量提高和设备发热。</p>
+</li>
+<li>
+<p>更新高通提供的新版驱动会导致华为的色彩设置功能不可用。</p>
+</li>
+<li>
+<p>windows下不支持原生vulkan（部分程序无法识别），linux下对vulkan的支持版本较低。</p>
+</li>
+</ul>
+<p>直接后果就是minecraft、一些模拟器（如eden、mumu模拟器）运行时出现问题，或直接无法运行。<br />
+可以通过杂交驱动强兼，但可能存在杂交驱动稳定性问题（我没遇到过）</p>
+<ul>
+<li>
+<p>3.5mm音频输出只支持16位，但实际上听不出来很大的差别。</p>
+</li>
+<li>
+<p>部分二手设备的电池存在较为明显老化的现象（即使这样续航也可以达到5小时左右）。</p>
+</li>
+</ul>
+<p>此外，市面上大部分流通的二手设备都是不贴膜的，屏幕多多少少会有划痕，如果你极度重视屏幕素质和显示体验的话，那么你可能需要多花几百块钱+更多的蹲有贴膜设备的时间，相信我，如果你确实作为准主力设备来使用的话，对于完美党的你来说，多花的钱是值得的，绝对不要贪便宜。</p>
+<h2 id="heading-1">文件系统与基础驱动</h2>
+<p>关于这方面，前面其实已经有人研究过了，详见：<a href="https://blog.remiki.ren/archives/21/">华为 Matebook E Go 2022 性能版 (8cx Gen 3) 体验 </a>和<a href="https://blog.remiki.ren/archives/36/">Matebook E Go 的正确折腾方法（和杂记） </a></p>
+<p>需要补充的点：</p>
+<p>华为电脑管家已经推出了ARM版本，下载链接：https://consumer.huawei.com/cn/support/laptops/matebook-e-go/，打开页面后点击“驱动下载”——“电脑管家”，就能下载到版本为14.0.7.260的arm版本的电脑管家。但是这个版本的屏幕拓展/多屏协同的功能还是存在问题，很多子进程的架构还是x64.</p>
+<h2 id="heading-2">系统安装</h2>
+<p>停留版本选择：<br />
+如果要自己重装系统的话，我推荐 Windows 11 25H2 专业版。这个版本的系统在ARM转译运行x86程序，更新频率，稳定性等方面做到了完美平衡。微软对arm设备上的体验正在做持续优化，几个大版本的更新后我的设备的流畅度和兼容性有肉眼可见的提升，现在还远没有到养老的时候，因此从这个角度来说，我不推荐lOT版本。下半年微软将会在正式版通道推送26H2版本，届时26H2可能会成为最好的系统版本。</p>
+<p>重装方法：<br />
+网上虽然有从头开始重装系统的教程，但是我不推荐从零开始,因为你可能会遇到各种奇奇怪怪的问题。</p>
+<p>主流的方法有以下两个：</p>
+<ul>
+<li>使用其他人打包好的镜像并搭配附带的教程。</li>
+<li>使用原厂PE进行重装。</li>
+</ul>
+<p>在重装系统后再通过Windows更新/修改组策略等方法升级到25H2版本的系统。</p>
+<p>可以参考如下链接：<br />
+<a href="https://www.coolapk.com/feed/64793912?s=N2RiMTYwNzYyNWQ2MzBiZzZhMTg4ZmYyega1601">华为Matebook E Go 原厂镜像,2022性能版（21h2）自制24h2镜像+全驱动备份</a></p>
+<p>如果后面我重装系统的话，也会单独写一篇重装系统的文。</p>
+<hr />
+<h2 id="heading-3">提升体验，打通使用前的最后一公里</h2>
+<p>基础配置</p>
+<ul>
+<li>提高刷新率</li>
+</ul>
+<p>华为matebook e go支持120hz刷新率,在使用手写笔手写时,提高刷新率可以显著提高手写的流畅性.</p>
+<ul>
+<li>激活windows系统</li>
+</ul>
+<p>我推荐:<a href="https://github.com/massgravel/Microsoft-Activation-Scripts">Microsoft-Activation-Scripts</a><br />
+打开powershell,运行<code>irm https://get.activated.win | iex</code>,根据提示即可激活.</p>
+<ul>
+<li>打满运行库</li>
+</ul>
+<p>1 安装Visual C++ v14 Redistributable</p>
+<p>打开下面的链接,下载<code>Visual C++ v14 Redistributable</code>x64体系结构版本.<br />
+<a href="https://aka.ms/vc14/vc_redist.x64.exe">https://aka.ms/vc14/vc_redist.x64.exe</a><br />
+或者打开这个链接<a href="https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist?view=msvc-170">Microsoft Visual C++ 可再发行程序包最新支持的下载</a></p>
+<p>2 安装其它运行库</p>
+<p>打开此<a href="https://blog.csdn.net/weixin_43101805/article/details/155573309">链接</a>,下载运行库合集.<br />
+注意:在安装中,让你选择组件时,只选择以下组件,不要全打上,<strong>否则会和上一步中安装的库发生冲突!!!</strong></p>
+<pre><code>Visual Basic Virtual Machine(5.1)
+Visual Basic Virtual Machine(6.0)
+Microsoft C Runtime Library 2002(7.0.9975.0)
+Microsoft C Runtime Library 2003(7.10.6119.0)
+Microsoft Visual C++2005 SP1(8.0.61187)
+Microsoft Visual C++2008 SP1(9.0.30729.7523)
+Microsoft Visual C++2010 SP1(10.0.40219.473)
+Microsoft Visual C++2012 UP4(11.0.61135.400)
+Microsoft Visual C++2013(12.0.40664.0)
+</code></pre>
+<ul>
+<li>安装vulkan兼容包和魔改驱动</li>
+</ul>
+<p>1 安装vulkan兼容包:<br />
+打开微软商店,搜索<code>Vulkan</code>,找到<code>OpenCL™、OpenGL® 和 Vulkan® 兼容包</code>并下载安装,重启完成安装.</p>
+<p>2 安装魔改驱动<br />
+骁龙8cxgen3有多个版本的社区魔改驱动,我比较推荐酷安LostStar_1029大佬的驱动.<br />
+安装教程参考如下链接:<br />
+<a href="https://www.coolapk.com/feed/66880602?s=MDY4MDA0YmUyNWQ2MzBiZzZhMDAyNjVmega1601">8cx Gen3显卡魔改驱动已更新20250716版本</a></p>
+<ul>
+<li>解决长时间睡眠关机的问题</li>
+</ul>
+<p>如果不想让你的设备休眠,同时保持较低电量的待机，可以参考我的这篇文章：<br />
+<a href="https://sakuraflows.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/">MateBook E Go 2023性能版防止长时间睡眠后进入休眠状态</a></p>
+<h3 id="heading-4">兼容性与扩展配置</h3>
+<ul>
+<li>arm仿真设置</li>
+</ul>
+<p>Windows on ARM 支持使用 Prism 在模拟下运行 x86 和 x64 应用程序。 Prism 包含许多优化功能，以确保仿真快速且性能良好，以便获得良好的用户体验。<br />
+默认情况下，Prism 在性能优化与应用兼容性之间达到最佳平衡。 在 Prism 下运行应用兼容性问题的罕见情况下，Windows 提供了可选的仿真设置，可用于调整 Prism 用于应用的行为和优化。 更改这些设置可能会增加应用程序的兼容性，通常以性能为代价。</p>
+<p>请参考下面的文章:<br />
+<a href="https://learn.microsoft.com/zh-cn/windows/arm/apps-on-arm-program-compat-troubleshooter">调整 Arm 上的仿真设置 | </a></p>
+<ul>
+<li>在windows on Arm上运行安卓系统.</li>
+</ul>
+<p>window的安卓子系统已经停更,本文提供在windows设备下运行Android系统的两种方式:</p>
+<p>方式一:下载mumu模拟器 windows on ARM版:<br />
+<a href="https://mumu.163.com/">MuMu模拟器</a></p>
+<p>方式二:WSL2安装waydroid (此方法比较复杂,不推荐)<br />
+请参考这篇文章:<br />
+<a href="https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/">ARM下WSL2编译可运行waydroid的WSL2（ARM）内核</a></p>
+<ul>
+<li>社区逆向开发的原生ARM64的触控驱动:<a href="https://github.com/awarson2233/EGoTouchRev">EGoTouchRev</a></li>
+</ul>
+<p>官方提供的x64的架构的触控驱动通过转译运行在Windows on arm上,造成设备发热,流畅度下降等问题,这版逆向驱动为原生ARM64,有利于设备降低耗电发热,提高流畅性.EGoTouchRev的最近版本功能比较稳定,但也会偶发手写断连的问题,请根据实际情况安装使用.</p>
+<h3 id="heading-5">必装工具</h3>
+<ul>
+<li><a href="https://github.com/SaKongA/EgoTools">EgoTools</a>:一款配置工具,可以修改屏幕色彩文件,管理无线键盘连接,电池充电限制等.</li>
+</ul>
+<h2 id="heading-6">一些常用工具</h2>
+<h4 id="heading-7">基础办公</h4>
+<ul>
+<li>office:office支持原生ARM</li>
+<li>WPS Office</li>
+</ul>
+<p>WPS也提供了原生ARM版本,虽然是内测版,但是也有很好的可用性.<br />
+以下两条链接都可以下载WPS<br />
+<a href="https://forum.wps.cn/topic/81703">【新品内测】原生速度，无缝兼容：WPS Office for Windows on ARM</a><br />
+<a href="https://apps.microsoft.com/detail/xpfm9b2w5gh3sk?hl=zh-CN&amp;gl=CN">微软商店 | WPS Office ARM版</a></p>
+<h4 id="heading-8">笔记,批注与阅读</h4>
+<ul>
+<li>obsidian:一款闭源的markdown笔记软件.虽然是闭源,但是开放了扩展开发等技术细节,总体来说还是比较开放的.</li>
+<li>Xournal++:一款pdf的批注,阅读软件,支持手写笔手写.</li>
+<li></li>
+</ul>
+<h4 id="ai">AI工具</h4>
+<ul>
+<li>cherry studio:ai chat终端</li>
+<li>codewhale:一款使用rust开发的ai代码工具,也可以当小号龙虾用:我为它编译了一份Windows on ARM版的:<br />
+<a href="https://github.com/sakuraflows/codewhale_winarm">codewhale_winarm</a></li>
+</ul>
+<h4 id="galgame">galgame相关工具(待补充)</h4>
+<h3 id="e-go-on-linux">E Go on Linux</h3>
+<p>本人没有使用过linux，以下内容均来源于他人，未经验证，请谨慎使用：</p>
+<ul>
+<li><a href="https://github.com/KawaiiHachimi/linux-gaokun-buildbot">https://github.com/KawaiiHachimi/linux-gaokun-buildbot</a></li>
+<li><a href="https://github.com/right-0903/linux-gaokun">https://github.com/right-0903/linux-gaokun</a></li>
+</ul>
+<h3 id="heading-9">其它社区资源</h3>
+<ul>
+<li>酷安,搜索话题&quot;华为Matebook E Go&quot;,&ldquo;woa&quot;等</li>
+<li></li>
+<li><a href="https://windowsonarm.org/">Windows ARM Software &amp; News</a></li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/">
+                  <h3 class="post-title">
+                    ARM下WSL2编译可运行waydroid的WSL2（ARM）内核
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script>console.log("\n%c ✦ Gridea Pro v1.2.1 %c · Theme: simple v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>
