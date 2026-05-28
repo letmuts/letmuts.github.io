@@ -6,16 +6,16 @@
     <description>Welcome to My Blog</description>
     <language>zh-cn</language>
     <generator>Gridea Pro</generator>
-    <lastBuildDate>Fri, 22 May 2026 05:08:05 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 23:08:29 +0800</lastBuildDate>
     <atom:link href="https://sakuraflows.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <item>
-      <title>编译Deepseek-TUI for Windows on ARM</title>
+      <title>编译Codewhale（原Deepseek-TUI） for Windows on ARM</title>
       <link>https://sakuraflows.github.io/post/vwEQ89/</link>
       <guid isPermaLink="true">https://sakuraflows.github.io/post/vwEQ89/</guid>
       <pubDate>Fri, 22 May 2026 03:28:30 +0800</pubDate>
-      <description><![CDATA[<p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在deepseek-tui的GitHub<a href="https://github.com/Hmbown/DeepSeek-TUI">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，deepseek-tui其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
+      <description><![CDATA[<p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub<a href="https://github.com/Hmbown/Codewhale">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，Codewhale其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
 <p>当然，你也可以到我的仓库当中下载已经编译好的二进制exe：<br />
-<a href="https://github.com/sakuraflows/deepseek-tui_winarm">https://github.com/sakuraflows/deepseek-tui_winarm</a></p>
+<a href="https://github.com/sakuraflows/codewhale_winarm">https://github.com/sakuraflows/codewhale_winarm</a></p>
 <h3 id="heading">问题：</h3>
 <p>cd到仓库目录，执行<code>cargo build --release</code>,出现如下报错：</p>
 <pre><code>
@@ -41,7 +41,7 @@ To reuse those artifacts with a future compilation, set the environment variable
 <p>此方案较简单,但安装的依赖较多.</p>
 <p>首先要下载如下内容:</p>
 <ul>
-<li><a href="https://github.com/Hmbown/DeepSeek-TUI">deepseek-tui</a></li>
+<li><a href="https://github.com/Hmbown/Codewhale">Codewhale</a></li>
 <li>下载并安装rust</li>
 <li>下载visual studio installer</li>
 </ul>
@@ -52,18 +52,18 @@ To reuse those artifacts with a future compilation, set the environment variable
 <li>适用于Windows的C++Clang 编译器</li>
 <li>Windows 11 SDK</li>
 </ul>
-<p>cd到你下载的deepseek-tui源码路径,然后执行<code>cargo build --release</code>,输出的编译结果会提示你编译好的exe所在的路径.</p>
-<p>或者你直接运行<code>cargo install deepseek-tui</code>也可以,cargo会为你配置一切,这样做你就可以直接打开powershell执行<code>deepseek</code>就可以使用了.</p>
+<p>cd到你下载的Codewhale源码路径,然后执行<code>cargo build --release</code>,输出的编译结果会提示你编译好的exe所在的路径.</p>
+<p>或者你直接运行<code>cargo install Codewhale</code>也可以,cargo会为你配置一切,这样做你就可以直接打开powershell执行<code>codewhale</code>就可以使用了.</p>
 <h4 id="-llvm-clang-cl">方法二：单独安装 LLVM（包含 clang-cl）</h4>
 <p>此方案较复杂,但此方案使用的是开源工具链,编译出的二进制可以应用于商业环境中,而不必担心通过微软visualstudioinstaller安装build tools造成的可能侵权的问题.(当然你前期配置rust环境也要使用gun工具链)</p>
 <p>首先需前往<a href="github.com/llvm/llvm-project">llvm project</a>,在release中下载<code>clang+llvm-22.1.6-aarch64-pc-windows-msvc.tar</code>.</p>
 <p>将压缩包解压,确保<code>bin\\clang-cl.exe</code>存在.</p>
 <p>现在有两个小方案:<br />
-1.直接在设备上安装deepseek-tui:<br />
+1.直接在设备上安装Codewhale:<br />
 临时设置变量</p>
-<pre><code>$env:CC = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin\clang-cl.exe&quot;
-$env:CXX = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin\clang-cl.exe&quot;
-$env:PATH = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin;$env:PATH&quot;  # 可选，方便 clang-cl 被调用
+<pre><code>$env:CC = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin\clang-cl.exe&quot;
+$env:CXX = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin\clang-cl.exe&quot;
+$env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 可选，方便 clang-cl 被调用
 </code></pre>
 <p>执行:<code>cargo clean</code>和<code>cargo install</code></p>
 <br>
@@ -359,10 +359,11 @@ aoeo.eu.org</p>
 <h3 id="heading-1">你能在这里看到什么</h3>
 <ul>
 <li>踩坑记录<br />
-大多数人开博客的理由都是为了记录自己的踩坑记录，正所谓“前车之覆，后车之鉴”。</li>
-<li>某些小众的文档<br />
+大多数人开博客的理由都是为了记录自己的踩坑记录，正所谓“前车之覆，后车之鉴”。<br />
+现在正在玩win on arm和学习Rust,你也许会看到我写更多的关于这两方面的文章.</li>
+<li>某些小众的程序语言文档<br />
 偶尔机翻下来的文档，会挂到博客上。</li>
-<li>读书笔记<br />
+<li>读书笔记,杂谈或者galgame,番剧的评说<br />
 已经不记得上回看书是什么时候了~</li>
 <li>碎碎念</li>
 </ul>

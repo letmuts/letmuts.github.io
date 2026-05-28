@@ -26,14 +26,14 @@
     } catch (e) { }
   })();
 </script>
-  <meta name="generator" content="Gridea Pro 1.1.1">
-  <title>编译Deepseek-TUI for Windows on ARM | 樱木有枝</title>
+  <meta name="generator" content="Gridea Pro 1.2.1">
+  <title>编译Codewhale（原Deepseek-TUI） for Windows on ARM | 樱木有枝</title>
   
-<meta property="og:title" content="编译Deepseek-TUI for Windows on ARM" />
+<meta property="og:title" content="编译Codewhale（原Deepseek-TUI） for Windows on ARM" />
 <meta property="og:type" content="article" />
 
 
-<meta name="description" content="如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在deepseek-tui的GitHub仓库中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，deepseek-tui其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里&amp;hellip;">
+<meta name="description" content="如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub仓库中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，Codewhale其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。 当然，你&amp;hellip;">
 <meta name="keywords" content="个人博客">
 <link rel="canonical" href="https://sakuraflows.github.io/post/vwEQ89/">
 <!-- Clarity tracking code for https://sakuraflows.github.io/ -->
@@ -171,7 +171,7 @@
     
 <article class="article-container">
   <header class="article-header">
-    <h1 class="article-title">编译Deepseek-TUI for Windows on ARM</h1>
+    <h1 class="article-title">编译Codewhale（原Deepseek-TUI） for Windows on ARM</h1>
     <div class="article-meta">
       
       
@@ -198,9 +198,9 @@
   
 
   <div class="article-content">
-    <p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在deepseek-tui的GitHub<a href="https://github.com/Hmbown/DeepSeek-TUI">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，deepseek-tui其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
+    <p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub<a href="https://github.com/Hmbown/Codewhale">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，Codewhale其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
 <p>当然，你也可以到我的仓库当中下载已经编译好的二进制exe：<br />
-<a href="https://github.com/sakuraflows/deepseek-tui_winarm">https://github.com/sakuraflows/deepseek-tui_winarm</a></p>
+<a href="https://github.com/sakuraflows/codewhale_winarm">https://github.com/sakuraflows/codewhale_winarm</a></p>
 <h3 id="heading">问题：</h3>
 <p>cd到仓库目录，执行<code>cargo build --release</code>,出现如下报错：</p>
 <pre><code>
@@ -226,7 +226,7 @@ To reuse those artifacts with a future compilation, set the environment variable
 <p>此方案较简单,但安装的依赖较多.</p>
 <p>首先要下载如下内容:</p>
 <ul>
-<li><a href="https://github.com/Hmbown/DeepSeek-TUI">deepseek-tui</a></li>
+<li><a href="https://github.com/Hmbown/Codewhale">Codewhale</a></li>
 <li>下载并安装rust</li>
 <li>下载visual studio installer</li>
 </ul>
@@ -237,18 +237,18 @@ To reuse those artifacts with a future compilation, set the environment variable
 <li>适用于Windows的C++Clang 编译器</li>
 <li>Windows 11 SDK</li>
 </ul>
-<p>cd到你下载的deepseek-tui源码路径,然后执行<code>cargo build --release</code>,输出的编译结果会提示你编译好的exe所在的路径.</p>
-<p>或者你直接运行<code>cargo install deepseek-tui</code>也可以,cargo会为你配置一切,这样做你就可以直接打开powershell执行<code>deepseek</code>就可以使用了.</p>
+<p>cd到你下载的Codewhale源码路径,然后执行<code>cargo build --release</code>,输出的编译结果会提示你编译好的exe所在的路径.</p>
+<p>或者你直接运行<code>cargo install Codewhale</code>也可以,cargo会为你配置一切,这样做你就可以直接打开powershell执行<code>codewhale</code>就可以使用了.</p>
 <h4 id="-llvm-clang-cl">方法二：单独安装 LLVM（包含 clang-cl）</h4>
 <p>此方案较复杂,但此方案使用的是开源工具链,编译出的二进制可以应用于商业环境中,而不必担心通过微软visualstudioinstaller安装build tools造成的可能侵权的问题.(当然你前期配置rust环境也要使用gun工具链)</p>
 <p>首先需前往<a href="github.com/llvm/llvm-project">llvm project</a>,在release中下载<code>clang+llvm-22.1.6-aarch64-pc-windows-msvc.tar</code>.</p>
 <p>将压缩包解压,确保<code>bin\\clang-cl.exe</code>存在.</p>
 <p>现在有两个小方案:<br />
-1.直接在设备上安装deepseek-tui:<br />
+1.直接在设备上安装Codewhale:<br />
 临时设置变量</p>
-<pre><code>$env:CC = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin\clang-cl.exe&quot;
-$env:CXX = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin\clang-cl.exe&quot;
-$env:PATH = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin;$env:PATH&quot;  # 可选，方便 clang-cl 被调用
+<pre><code>$env:CC = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin\clang-cl.exe&quot;
+$env:CXX = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin\clang-cl.exe&quot;
+$env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 可选，方便 clang-cl 被调用
 </code></pre>
 <p>执行:<code>cargo clean</code>和<code>cargo install</code></p>
 <br>
@@ -356,6 +356,6 @@ $env:PATH = &quot;C:\Users\fulde\projects\deepseek-tui\llvm\bin;$env:PATH&quot; 
 
   <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 
-<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v1.2.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
