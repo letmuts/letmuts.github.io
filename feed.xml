@@ -6,10 +6,10 @@
     <description>Welcome to My Blog</description>
     <language>zh-cn</language>
     <generator>Gridea Pro</generator>
-    <lastBuildDate>Thu, 28 May 2026 23:08:29 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 23:44:57 +0800</lastBuildDate>
     <atom:link href="https://sakuraflows.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <item>
-      <title>编译Codewhale（原Deepseek-TUI） for Windows on ARM</title>
+      <title>编译Codewhale的Windows on Arm（ARM64）版本</title>
       <link>https://sakuraflows.github.io/post/vwEQ89/</link>
       <guid isPermaLink="true">https://sakuraflows.github.io/post/vwEQ89/</guid>
       <pubDate>Fri, 22 May 2026 03:28:30 +0800</pubDate>
