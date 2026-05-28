@@ -6,7 +6,7 @@
     <description>Welcome to My Blog</description>
     <language>zh-cn</language>
     <generator>Gridea Pro</generator>
-    <lastBuildDate>Fri, 29 May 2026 06:18:03 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 06:23:24 +0800</lastBuildDate>
     <atom:link href="https://sakuraflows.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <item>
       <title>解决Rust Cargo:Missing manifest in toolchain xxx报错.</title>
@@ -29,6 +29,7 @@ error: Missing manifest in toolchain '1.90-aarch64-pc-windows-msvc'
 <p>实际上在我们执行<code>cargo install mdbook</code>时,cargo会自动检查构建mdbook所需的依赖,并传参给rustc,rustup等其它工具链模块,自动完成构建程序.在此过程中,rustup会自动静默下载或调用所需的工具链依赖,由于笔者在此过程中不小心断网,导致rustup没能安装<code>1.90-aarch64-pc-windows-msvc</code>,最终出现了error: Missing manifest in toolchain的错误.</p>
 <h2 id="heading-2">解决方案</h2>
 <p>执行<code>rustup update</code>命令,重新检查工具链模块安装即可.</p>
+<p>如果不行的话,请执行和rustup相关的错误检查步骤.</p>
 <p>参考:<br />
 <a href="https://github.com/rust-lang/rustup/issues/4863">https://github.com/rust-lang/rustup/issues/4863</a><br />
 <a href="https://rust-lang.github.io/rustup/concepts/index.html">https://rust-lang.github.io/rustup/concepts/index.html</a></p>

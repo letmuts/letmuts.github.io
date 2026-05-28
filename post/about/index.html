@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="/favicon.ico?v=1780006715">
+<link rel="shortcut icon" href="/favicon.ico?v=1780009349">
 <link rel="stylesheet" href="/styles/main.css">
 
 
@@ -26,15 +26,13 @@
 <link rel="canonical" href="https://sakuraflows.github.io/post/about/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"关于","url":"https://sakuraflows.github.io/post/about/","description":"首先，要感谢Gridea Pro以及源项目 Gridea的创造者，是他们无私的贡献才能让无数人得以以近乎零门槛创建自己的博客；也让我省去了大量的构建与部署的时间。在此向他们以及所有开源者致敬。 关于我和我的博客 关于我\u0026hellip;","datePublished":"2026-05-06T00:16:40+08:00","dateModified":"2026-05-29T00:57:06+08:00","author":{"@type":"Person","name":"Letmut"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"Letmut"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://sakuraflows.github.io","name":"Letmut","position":1},{"@type":"ListItem","item":"https://sakuraflows.github.io/post/about/","name":"关于","position":2}]}</script>
-<!-- Clarity tracking code for https://sakuraflows.github.io/ -->
-<script>
+<script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "wmh9rbripm");
 </script>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 </head>
   <body>
     <div id="app" class="main">
@@ -43,7 +41,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="/">
-        <img src="/images/avatar.png?v=1780006715" class="site-logo">
+        <img src="/images/avatar.png?v=1780009349" class="site-logo">
         <h1 class="site-title">Letmut</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -196,8 +194,73 @@ var app = new Vue({
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <!-- 评论区容器 - 使用 div 包裹并限制宽度 -->
+<div class="giscus-container">
+    <script src="https://giscus.app/client.js"
+            data-repo="sakuraflows/gitalk-comments"
+            data-repo-id="R_kgDOSWB1fw"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOSWB1f84C-C4D"
+            data-mapping="url"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="light"
+            data-lang="zh-CN"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
 
+<style>
+    /* ========== 评论区宽度控制 ========== */
+    .giscus-container {
+        /* 👇 核心：限制最大宽度，根据你的侧边栏宽度调整这个值 */
+        max-width: 8000px;
+        /* 或者使用百分比/calc，例如： */
+        /* max-width: calc(100% - 280px);  */  /* 如果侧边栏约280px宽 */
+        /* max-width: 70%;                   */
+
+        /* 水平居中（可选，按需开启） */
+        margin: 0 auto;
+
+        /* 防止内容溢出 */
+        overflow: hidden;
+
+        /* 确保 padding 不会撑大容器 */
+        box-sizing: border-box;
+
+        /* 与上下内容的间距 */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* 让 giscus 生成的 widget 和 iframe 填满容器 */
+    .giscus-container > .giscus,
+    .giscus-container > giscus-widget,
+    .giscus-container iframe {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* ========== 响应式：小屏幕适配 ========== */
+    @media screen and (max-width: 768px) {
+        .giscus-container {
+            /* 小屏幕上占满宽度，留一点内边距 */
+            max-width: 100%;
+            padding: 0 10px;
+        }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+        .giscus-container {
+            /* 中等屏幕上适当缩小 */
+            max-width: 85%;
+        }
+    }
+</style>
 <script>console.log("\n%c ✦ Gridea Pro v1.2.1 %c · Theme: simple v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
