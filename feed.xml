@@ -6,15 +6,14 @@
     <description>Welcome to My Blog</description>
     <language>zh-cn</language>
     <generator>Gridea Pro</generator>
-    <lastBuildDate>Fri, 29 May 2026 00:01:48 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 00:12:46 +0800</lastBuildDate>
     <atom:link href="https://sakuraflows.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <item>
       <title>编译Codewhale的Windows on Arm（ARM64）版本</title>
       <link>https://sakuraflows.github.io/post/vwEQ89/</link>
       <guid isPermaLink="true">https://sakuraflows.github.io/post/vwEQ89/</guid>
       <pubDate>Fri, 22 May 2026 03:28:30 +0800</pubDate>
-      <description><![CDATA[<!-- more -->
-<p>构建编译Codewhale的Windows on Arm版本的教程</p>
+      <description><![CDATA[<p>构建编译Codewhale的Windows on Arm版本的教程</p>
 <!-- more -->
 <p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub<a href="https://github.com/Hmbown/Codewhale">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，Codewhale其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
 <p>当然，你也可以到我的仓库当中下载已经编译好的二进制exe：<br />
@@ -96,6 +95,7 @@ $env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 
 <li>配置vscode+git+deepseek的全套运行开发环境</li>
 <li>入门教程推荐。</li>
 </ul>
+<!-- more -->
 <h3 id="1rust">1.下载rust及其所需的组件</h3>
 <p>前往官网页面下载rust：https://rust-lang.org/zh-CN/tools/install/<br />
 下载git：https://git-scm.com/install/<br />
@@ -199,7 +199,9 @@ Rust 的升级非常频繁。如果您安装 Rustup 后已有一段时间，那�
       <link>https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/</link>
       <guid isPermaLink="true">https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/</guid>
       <pubDate>Wed, 06 May 2026 01:50:16 +0800</pubDate>
-      <description><![CDATA[<p>应该也适用于linux下编译可运行waydroid的WSL2（ARM）内核吧&hellip;</p>
+      <description><![CDATA[<p>编译WSL2编译可运行waydroid的WSL2（ARM）内核</p>
+<!-- more -->
+<p>应该也适用于linux下编译可运行waydroid的WSL2（ARM）内核吧&hellip;</p>
 <p>假设你不想编译直接用的话，我的仓库里面有一份编译好的：<br />
 <a href="https://github.com/sakuraflows/wsl2-linuxkernel-arm-build/releases">https://github.com/sakuraflows/wsl2-linuxkernel-arm-build/releases</a></p>
 <p>背景介绍：<br />
@@ -288,7 +290,9 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
       <link>https://sakuraflows.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/</link>
       <guid isPermaLink="true">https://sakuraflows.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/</guid>
       <pubDate>Wed, 06 May 2026 01:31:11 +0800</pubDate>
-      <description><![CDATA[<h3 id="heading">方法一：修改注册表</h3>
+      <description><![CDATA[<p>MateBook E Go 2023性能版防止长时间睡眠后进入休眠状态</p>
+<!-- more -->
+<h3 id="heading">方法一：修改注册表</h3>
 <p>这个方法笔者本人没有试过。</p>
 <p>按下Win+R键，输入 regedit 打开注册表编辑器。<br />
 导航到路径 HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlPower。<br />
