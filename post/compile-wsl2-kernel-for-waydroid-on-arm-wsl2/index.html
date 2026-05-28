@@ -1,27 +1,30 @@
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" >
 
-<head>
-    
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content="Gridea Pro 1.2.1">
 <title>ARM下WSL2编译可运行waydroid的WSL2（ARM）内核 | 樱木有枝</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1779987242">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="/favicon.ico?v=1779987772">
 <link rel="stylesheet" href="/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="ARM下WSL2编译可运行waydroid的WSL2（ARM）内核 | 樱木有枝 - Atom Feed" href="/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
-<meta name="description" content="编译WSL2编译可运行waydroid的WSL2（ARM）内核">
+  <meta name="description" content="编译WSL2编译可运行waydroid的WSL2（ARM）内核">
 <meta name="keywords" content="个人博客">
 <link rel="canonical" href="https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ARM下WSL2编译可运行waydroid的WSL2（ARM）内核","url":"https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/","description":"编译WSL2编译可运行waydroid的WSL2（ARM）内核","datePublished":"2026-05-06T01:50:16+08:00","dateModified":"2026-05-29T00:13:29+08:00","author":{"@type":"Person","name":"樱木有枝"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"樱木有枝"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ARM下WSL2编译可运行waydroid的WSL2（ARM）内核","url":"https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/","description":"编译WSL2编译可运行waydroid的WSL2（ARM）内核","datePublished":"2026-05-06T01:50:16+08:00","dateModified":"2026-05-29T00:56:55+08:00","author":{"@type":"Person","name":"樱木有枝"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"樱木有枝"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://sakuraflows.github.io","name":"樱木有枝","position":1},{"@type":"ListItem","item":"https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/","name":"ARM下WSL2编译可运行waydroid的WSL2（ARM）内核","position":2}]}</script>
 <!-- Clarity tracking code for https://sakuraflows.github.io/ -->
 <script>
@@ -33,99 +36,108 @@
 </script>
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 </head>
+  <body>
+    <div id="app" class="main">
 
-<body>
-    <div class="main">
-        <div class="main-content">
-            
-<div class="site-header">
-    <a href="/">
-        <img class="avatar" src="/images/avatar.png?v=1779987242" alt="">
-    </a>
-    <h1 class="site-title">
-        樱木有枝
-    </h1>
-    <p class="site-description">
-        Welcome to My Blog
-    </p>
-    <div class="menu-container">
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="/">
+        <img src="/images/avatar.png?v=1779987772" class="site-logo">
+        <h1 class="site-title">樱木有枝</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
         
-        
-        <a href="/" class="menu">
+          <a href="/" class="site-nav">
             首页
-        </a>
+          </a>
         
+      
         
-        
-        <a href="/post" class="menu">
+          <a href="/post" class="site-nav">
             博客
-        </a>
+          </a>
         
+      
         
-        
-        <a href="/memos" class="menu">
+          <a href="/memos" class="site-nav">
             闪念
-        </a>
+          </a>
         
+      
         
-        
-        <a href="/archives" class="menu">
+          <a href="/archives" class="site-nav">
             归档
-        </a>
+          </a>
         
+      
         
-        
-        <a href="/tags" class="menu">
+          <a href="/tags" class="site-nav">
             标签
-        </a>
+          </a>
         
+      
         
-        
-        <a href="/links" class="menu">
+          <a href="/links" class="site-nav">
             友链
-        </a>
+          </a>
         
+      
         
-        
-        <a href="null" class="menu" target="_blank">
+          <a href="null" class="site-nav" target="_blank">
             程序文档
-        </a>
+          </a>
         
+      
         
-        
-        <a href="/post/about" class="menu">
+          <a href="/post/about" class="site-nav">
             关于
-        </a>
+          </a>
         
-        
+      
     </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
     <div class="social-container">
+      
         
+          <a class="social-link" href="https://github.com/sakuraflows" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
         
+      
         
+      
         
+      
         
+      
+        
+      
     </div>
+    <div class="site-description">
+      Welcome to My Blog
+    </div>
+    <div class="site-footer">
+      Powered by Gridea Pro | <a class="rss" href="/feed.xml" target="_blank">RSS</a>
+    </div>
+  </div>
 </div>
 
-            <div class="post-detail">
-                <article class="post">
-                    <h2 class="post-title">
-                        ARM下WSL2编译可运行waydroid的WSL2（ARM）内核
-                    </h2>
-                    <div class="post-info">
-                        <span>
-                            2026-05-06
-                        </span>
-                        <span>
-                            5 分钟阅读
-                        </span>
-                        
-                    </div>
-                    
-                    <div class="post-content-wrapper">
-                        <div class="post-content" v-pre>
-                            <p>编译WSL2编译可运行waydroid的WSL2（ARM）内核</p>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">ARM下WSL2编译可运行waydroid的WSL2（ARM）内核</h2>
+            <div class="post-date">2026-05-06</div>
+            
+            <div class="post-content" v-pre>
+              <p>编译WSL2编译可运行waydroid的WSL2（ARM）内核</p>
 <!-- more -->
 <p>应该也适用于linux下编译可运行waydroid的WSL2（ARM）内核吧&hellip;</p>
 <p>假设你不想编译直接用的话，我的仓库里面有一份编译好的：<br />
@@ -210,81 +222,53 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
 <li><a href="https://gist.github.com/onomatopellan/c5220c0efddaff69aaff77cca80b7b8e"> Waydroid in WSL2 with sound</a></li>
 </ul>
 
-                        </div>
-                        <div class="toc-container">
-                            
-                        </div>
-                    </div>
-                </article>
             </div>
-
             
-            <div class="next-post">
+            
+              <div class="next-post">
                 <div class="next">下一篇</div>
                 <a href="/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/">
-                    <h3 class="post-title">
-                        MateBook E Go 2023性能版防止长时间睡眠后进入休眠状态
-                    </h3>
+                  <h3 class="post-title">
+                    MateBook E Go 2023性能版防止长时间睡眠后进入休眠状态
+                  </h3>
                 </a>
-            </div>
+              </div>
             
 
             
 
-            
-<div class="site-footer">
-    Powered by Gridea Pro
-    <a class="rss" href="/atom.xml" target="_blank">
-        <i class="ri-rss-line"></i> RSS
-    </a>
-</div>
+          </div>
 
         </div>
+      </div>
     </div>
 
-    <script>
-        hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-        let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-        
-        
-        
-        
-        
-        
-        
-        
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-        window.addEventListener("scroll", event => {
-            let fromTop = window.scrollY;
+</script>
 
-            mainNavLinks.forEach((link, index) => {
-                let section = document.getElementById(decodeURI(link.hash).substring(1));
-                let nextSection = null
-                if (mainNavLinks[index + 1]) {
-                    nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-                }
-                if (section.offsetTop <= fromTop) {
-                    if (nextSection) {
-                        if (nextSection.offsetTop > fromTop) {
-                            link.classList.add("current");
-                        } else {
-                            link.classList.remove("current");
-                        }
-                    } else {
-                        link.classList.add("current");
-                    }
-                } else {
-                    link.classList.remove("current");
-                }
-            });
-        });
 
-    </script>
-  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
 
-<script>console.log("\n%c ✦ Gridea Pro v1.2.1 %c · Theme: inotes v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+<script>console.log("\n%c ✦ Gridea Pro v1.2.1 %c · Theme: simple v1.1.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
-
 </html>
