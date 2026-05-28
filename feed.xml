@@ -613,6 +613,7 @@ aoeo.eu.org</p>
 </ul>
 <h3 id="heading-4">隐私说明</h3>
 <p>本站采用<a href="https://github.com/Gridea-Pro/gridea-pro">Gridea Pro</a>部署，托管于Github Page,并使用<a href="https://clarity.microsoft.com/">microsoft clarity</a>实现网站访问统计等功能。关于microsoft clarity的数据隐私和安全性请访问https://clarity.microsoft.com/privacy以了解详情，本站不会从Github Page、clarity等任何收集访问者数据的平台上下载涉及访问者的数据；对这些数据的查看，分析等工作均在数据所在的平台上完成。</p>
+<p>本站的评论功能基于Giscus,你在本站发表评论时会登录GitHub账号,你的评论会在本站及<a href="https://github.com/sakuraflows/gitalk-comments">此处</a>公开,公开的内容不限于用户名,头像,账户profile等信息.如果想要删除评论,请前往该仓库的<a href="https://github.com/sakuraflows/gitalk-comments/discussions">discussions</a>删除你的评论.或联系我进行删除.</p>
 ]]></description>
     </item>
   </channel>
