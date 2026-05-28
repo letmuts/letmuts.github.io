@@ -1,0 +1,686 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>使用生命周期验证引用 - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-b61d7e59.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-d88af4f5.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="使用生命周期lifetime验证引用"><a class="header" href="#使用生命周期lifetime验证引用">使用生命周期（Lifetime）验证引用</a></h2>
+<p>生命周期是另一种我们已经在使用中的泛型。不同于确保类型具有我们想要的行为，生命周期确保引用在我们需要它们的时候一直有效。</p>
+<p>我们在第 4 章的<a href="ch04-02-references-and-borrowing.html#references-and-borrowing">“引用与借用”</a><!-- ignore -->部分没有讨论的一个细节是，Rust 中的每个引用都有一个生命周期（lifetime），也就是该引用有效的范围。大多数情况下，生命周期是隐式且可推断的，就像大多数情况下类型可以被推断一样。我们只在可能存在多种类型时才需要标注类型。类似地，当引用的生命周期可能以几种不同方式相互关联时，我们必须标注生命周期。Rust 要求我们使用泛型生命周期参数来标注这些关系，以确保运行时使用的实际引用绝对是有效的。</p>
+<p>标注生命周期甚至不是大多数其他编程语言都有的概念，所以这可能会让人感到陌生。尽管我们不会在本章中完整地介绍生命周期，但我们将讨论你可能遇到的生命周期语法的常见方式，以便你能熟悉这个概念。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="preventing-dangling-references-with-lifetimes"></a></p>
+<h3 id="悬垂引用dangling-references"><a class="header" href="#悬垂引用dangling-references">悬垂引用（Dangling References）</a></h3>
+<p>生命周期的主要目的是防止悬垂引用（dangling references），如果允许它们存在，程序会引用非其意图引用的数据。考虑示例 10-16 中的程序，它有一个外部作用域和一个内部作用域。</p>
+<figure class="listing" id="listing-10-16">
+<pre><code class="language-rust ignore does_not_compile">fn main() {
+    let r;
+
+    {
+        let x = 5;
+        r = &amp;x;
+    }
+
+    println!("r: {r}");
+}</code></pre>
+<figcaption><a href="#listing-10-16">Listing 10-16</a>: 尝试使用值已经离开作用域的引用</figcaption>
+</figure>
+<blockquote>
+<p>注意：示例 10-16、10-17 和 10-23 中的示例声明了变量但未赋予初始值，因此变量名存在于外部作用域。乍一看，这似乎与 Rust 没有空值（null）相冲突。然而，如果我们尝试在给变量赋值之前使用它，我们会得到一个编译时错误，这表明 Rust 确实不允许空值。</p>
+</blockquote>
+<p>外部作用域声明了一个名为 <code>r</code> 的变量，没有初始值，内部作用域声明了一个名为 <code>x</code> 的变量，初始值为 <code>5</code>。在内部作用域中，我们尝试将 <code>r</code> 的值设置为对 <code>x</code> 的引用。然后，内部作用域结束，我们尝试打印 <code>r</code> 中的值。这段代码无法编译，因为 <code>r</code> 所引用的值在我们尝试使用它之前已经离开了作用域。以下是错误消息：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `x` does not live long enough
+ --&gt; src/main.rs:6:13
+  |
+5 |         let x = 5;
+  |             - binding `x` declared here
+6 |         r = &amp;x;
+  |             ^^ borrowed value does not live long enough
+7 |     }
+  |     - `x` dropped here while still borrowed
+8 |
+9 |     println!("r: {r}");
+  |                   - borrow later used here
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>错误消息说变量 <code>x</code> “does not live long enough”。原因是当内部作用域在第 7 行结束时，<code>x</code> 将超出作用域。但 <code>r</code> 在外部作用域中仍然有效；因为它的作用域更大，我们说它“活得更长“。如果 Rust 允许这段代码工作，<code>r</code> 将引用当 <code>x</code> 超出作用域时已释放的内存，而我们尝试对 <code>r</code> 做的任何事情都不会正确工作。那么，Rust 如何确定这段代码是无效的呢？它使用了一个借用检查器。</p>
+<h3 id="借用检查器borrow-checker"><a class="header" href="#借用检查器borrow-checker">借用检查器（Borrow Checker）</a></h3>
+<p>Rust 编译器有一个<em>借用检查器（borrow checker）</em>，它比较作用域以确定所有借用是否有效。示例 10-17 显示了与示例 10-16 相同的代码，但带有注释显示变量的生命周期。</p>
+<figure class="listing" id="listing-10-17">
+<pre><code class="language-rust ignore does_not_compile">fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &amp;x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {r}");   //          |
+}                         // ---------+</code></pre>
+<figcaption><a href="#listing-10-17">Listing 10-17</a>: <code>r</code> 和 <code>x</code> 的生命周期注释，分别命名为 <code>'a</code> 和 <code>'b</code></figcaption>
+</figure>
+<p>在这里，我们用 <code>'a</code> 注释了 <code>r</code> 的生命周期，用 <code>'b</code> 注释了 <code>x</code> 的生命周期。如你所见，内部的 <code>'b</code> 块比外部的 <code>'a</code> 生命周期块小得多。在编译时，Rust 比较两个生命周期的大小，并看到 <code>r</code> 的生命周期是 <code>'a</code>，但它引用的内存的生命周期是 <code>'b</code>。程序被拒绝，因为 <code>'b</code> 比 <code>'a</code> 短：引用的主题（subject）没有引用本身活得长。</p>
+<p>示例 10-18 修复了代码，使其没有悬垂引用，并且可以编译而没有任何错误。</p>
+<figure class="listing" id="listing-10-18">
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &amp;x;           // --+-- 'a  |
+                          //   |       |
+    println!("r: {r}");   //   |       |
+                          // --+       |
+}                         // ----------+</code></pre>
+<figcaption><a href="#listing-10-18">Listing 10-18</a>: 一个有效的引用，因为数据的生命周期比引用的生命周期长</figcaption>
+</figure>
+<p>在这里，<code>x</code> 的生命周期是 <code>'b</code>，在这种情况下它比 <code>'a</code> 大。这意味着 <code>r</code> 可以引用 <code>x</code>，因为 Rust 知道只要 <code>x</code> 有效，<code>r</code> 中的引用就始终有效。</p>
+<p>现在你已经知道引用的生命周期在哪里以及 Rust 如何分析生命周期以确保引用始终有效，让我们探讨函数参数和返回值中的泛型生命周期。</p>
+<h3 id="函数中的泛型生命周期"><a class="header" href="#函数中的泛型生命周期">函数中的泛型生命周期</a></h3>
+<p>我们将编写一个返回两个字符串切片中较长者的函数。这个函数将接受两个字符串切片并返回一个字符串切片。在我们实现了 <code>longest</code> 函数之后，示例 10-19 中的代码应该打印 <code>The longest string is abcd</code>。</p>
+<figure class="listing" id="listing-10-19">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {result}");
+}</code></pre>
+<figcaption><a href="#listing-10-19">Listing 10-19</a>: 调用 <code>longest</code> 函数以查找两个字符串切片中较长者的 <code>main</code> 函数</figcaption>
+</figure>
+<p>注意，我们希望函数接受字符串切片，即引用，而不是字符串，因为我们不希望 <code>longest</code> 函数获取其参数的所有权。请参阅第 4 章的<a href="ch04-03-slices.html#string-slices-as-parameters">“字符串切片作为参数”</a><!-- ignore -->部分，了解更多关于为什么我们在示例 10-19 中使用的参数是我们想要的参数。</p>
+<p>如果我们尝试按照示例 10-20 所示实现 <code>longest</code> 函数，它将无法编译。</p>
+<figure class="listing" id="listing-10-20">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
+<figcaption><a href="#listing-10-20">Listing 10-20</a>: 一个返回两个字符串切片中较长者的 <code>longest</code> 函数实现，但尚不能编译</figcaption>
+</figure>
+<p>相反，我们得到以下关于生命周期的错误：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0106]: missing lifetime specifier
+ --&gt; src/main.rs:9:33
+  |
+9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+  |               ----     ----     ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`
+help: consider introducing a named lifetime parameter
+  |
+9 | fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+  |           ++++     ++          ++          ++
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>帮助文本显示返回类型需要一个泛型生命周期参数，因为 Rust 无法判断返回的引用是指向 <code>x</code> 还是 <code>y</code>。实际上，我们也不知道，因为这个函数体中的 <code>if</code> 块返回对 <code>x</code> 的引用，而 <code>else</code> 块返回对 <code>y</code> 的引用！</p>
+<p>当我们定义这个函数时，我们不知道将传入此函数的具体值，因此我们不知道 <code>if</code> 情况还是 <code>else</code> 情况会执行。我们也不知道传入的引用的具体生命周期，因此我们无法像在示例 10-17 和 10-18 中那样查看作用域来确定我们返回的引用是否始终有效。借用检查器也无法确定这一点，因为它不知道 <code>x</code> 和 <code>y</code> 的生命周期如何与返回值的生命周期相关联。要修复这个错误，我们将添加泛型生命周期参数，用于定义引用之间的关系，以便借用检查器可以执行其分析。</p>
+<h3 id="生命周期注解语法"><a class="header" href="#生命周期注解语法">生命周期注解语法</a></h3>
+<p>生命周期注解不会改变任何引用的存活时间。相反，它们描述多个引用的生命周期之间的相互关系，而不影响生命周期。就像函数在签名指定泛型类型参数时可以接受任何类型一样，函数可以通过指定泛型生命周期参数来接受具有任何生命周期的引用。</p>
+<p>生命周期注解的语法有点不寻常：生命周期参数的名称必须以撇号（<code>'</code>）开头，通常全是小写且非常短，就像泛型类型一样。大多数人使用名称 <code>'a</code> 作为第一个生命周期注解。我们将生命周期参数注解放在引用的 <code>&amp;</code> 之后，使用空格将注解与引用的类型分隔开。</p>
+<p>以下是一些示例——没有生命周期参数的 <code>i32</code> 引用、具有名为 <code>'a</code> 的生命周期参数的 <code>i32</code> 引用，以及同样具有生命周期 <code>'a</code> 的可变 <code>i32</code> 引用：</p>
+<pre><code class="language-rust ignore">&amp;i32        // a reference
+&amp;'a i32     // a reference with an explicit lifetime
+&amp;'a mut i32 // a mutable reference with an explicit lifetime</code></pre>
+<p>一个生命周期注解本身没有多大意义，因为注解的目的是告诉 Rust 多个引用的泛型生命周期参数如何相互关联。让我们看看在 <code>longest</code> 函数的上下文中，生命周期注解如何相互关联。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="lifetime-annotations-in-function-signatures"></a></p>
+<h3 id="在函数签名中"><a class="header" href="#在函数签名中">在函数签名中</a></h3>
+<p>要在函数签名中使用生命周期注解，我们需要在函数名称和参数列表之间的尖括号内声明泛型生命周期参数，就像我们对泛型类型参数所做的那样。</p>
+<p>我们希望签名表达以下约束：只要两个参数都有效，返回的引用就有效。这是参数生命周期和返回值生命周期之间的关系。我们将生命周期命名为 <code>'a</code>，然后将其添加到每个引用中，如示例 10-21 所示。</p>
+<figure class="listing" id="listing-10-21">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
+<figcaption><a href="#listing-10-21">Listing 10-21</a>: <code>longest</code> 函数定义，指定签名中的所有引用必须具有相同的生命周期 <code>'a</code></figcaption>
+</figure>
+<p>当我们将此代码与示例 10-19 中的 <code>main</code> 函数一起使用时，它应该能够编译并产生我们想要的结果。</p>
+<p>函数签名现在告诉 Rust，对于某个生命周期 <code>'a</code>，该函数接受两个参数，这两个参数都是字符串切片，其存活时间至少与生命周期 <code>'a</code> 一样长。函数签名还告诉 Rust，从函数返回的字符串切片将至少存活与生命周期 <code>'a</code> 一样长。实际上，这意味着 <code>longest</code> 函数返回的引用的生命周期等于函数参数引用的值的生命周期中较小的那个。这些关系正是我们希望 Rust 在分析此代码时使用的。</p>
+<p>记住，当我们在函数签名中指定生命周期参数时，我们并没有改变传入或返回的任何值的生命周期。相反，我们指定借用检查器应拒绝任何不遵守这些约束的值。注意，<code>longest</code> 函数不需要确切知道 <code>x</code> 和 <code>y</code> 将存活多久，只需要知道某个可以替代 <code>'a</code> 的作用域将满足此签名。</p>
+<p>在函数中注解生命周期时，注解放在函数签名中，而不是函数体中。生命周期注解成为函数契约的一部分，就像签名中的类型一样。函数签名包含生命周期契约意味着 Rust 编译器所做的分析可以更简单。如果函数的注解方式或调用方式有问题，编译器错误可以更精确地指向我们代码和约束的部分。相反，如果 Rust 编译器对我们意图的生命周期关系做了更多推断，编译器可能只能在远离问题根源的多个步骤之后指向我们代码的使用处。</p>
+<p>当我们向 <code>longest</code> 传递具体引用时，替代 <code>'a</code> 的具体生命周期是 <code>x</code> 的作用域与 <code>y</code> 的作用域重叠的部分。换句话说，泛型生命周期 <code>'a</code> 将获得等于 <code>x</code> 和 <code>y</code> 中较小的那个生命周期的具体生命周期。因为我们用相同的生命周期参数 <code>'a</code> 注解了返回的引用，所以返回的引用也将对 <code>x</code> 和 <code>y</code> 中较小的生命周期长度有效。</p>
+<p>让我们通过传入具有不同具体生命周期的引用来看看生命周期注解如何限制 <code>longest</code> 函数。示例 10-22 是一个直接了当的例子。</p>
+<figure class="listing" id="listing-10-22">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let string1 = String::from("long string is long");
+
+    {
+        let string2 = String::from("xyz");
+        let result = longest(string1.as_str(), string2.as_str());
+        println!("The longest string is {result}");
+    }
+}
+<span class="boring">
+</span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+</span><span class="boring">    if x.len() &gt; y.len() { x } else { y }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-10-22">Listing 10-22</a>: 使用具有不同具体生命周期的 <code>String</code> 值引用调用 <code>longest</code> 函数</figcaption>
+</figure>
+<p>在这个例子中，<code>string1</code> 在外部作用域结束之前有效，<code>string2</code> 在内部作用域结束之前有效，而 <code>result</code> 引用的对象在内部作用域结束之前有效。运行这段代码，你会看到借用检查器批准了它；它将编译并打印 <code>The longest string is long string is long</code>。</p>
+<p>接下来，让我们尝试一个例子，展示 <code>result</code> 中引用的生命周期必须是两个参数中较小的那个生命周期。我们将 <code>result</code> 变量的声明移到内部作用域之外，但将 <code>result</code> 变量的赋值留在 <code>string2</code> 的内部作用域内。然后，我们将使用 <code>result</code> 的 <code>println!</code> 移到内部作用域之外，在内部作用域结束之后。示例 10-23 中的代码将无法编译。</p>
+<figure class="listing" id="listing-10-23">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile">fn main() {
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!("The longest string is {result}");
+}
+<span class="boring">
+</span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+</span><span class="boring">    if x.len() &gt; y.len() { x } else { y }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-10-23">Listing 10-23</a>: 在 <code>string2</code> 离开作用域后尝试使用 <code>result</code></figcaption>
+</figure>
+<p>当我们尝试编译这段代码时，会得到这个错误：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `string2` does not live long enough
+ --&gt; src/main.rs:6:44
+  |
+5 |         let string2 = String::from("xyz");
+  |             ------- binding `string2` declared here
+6 |         result = longest(string1.as_str(), string2.as_str());
+  |                                            ^^^^^^^ borrowed value does not live long enough
+7 |     }
+  |     - `string2` dropped here while still borrowed
+8 |     println!("The longest string is {result}");
+  |                                      ------ borrow later used here
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>错误显示，要使 <code>result</code> 对 <code>println!</code> 语句有效，<code>string2</code> 需要直到外部作用域结束都有效。Rust 知道这一点，因为我们使用相同的生命周期参数 <code>'a</code> 标注了函数参数和返回值的生命周期。</p>
+<p>作为人类，我们可以查看这段代码，看到 <code>string1</code> 比 <code>string2</code> 长，因此 <code>result</code> 将包含对 <code>string1</code> 的引用。因为 <code>string1</code> 尚未离开作用域，对 <code>string1</code> 的引用对于 <code>println!</code> 语句仍然有效。然而，编译器无法在这种情况下看到引用是有效的。我们已经告诉 Rust，<code>longest</code> 函数返回的引用的生命周期与传入的引用中较小的那个生命周期相同。因此，借用检查器禁止示例 10-23 中的代码，认为它可能具有无效的引用。</p>
+<p>尝试设计更多实验，改变传入 <code>longest</code> 函数的引用的值和生命周期以及返回引用的使用方式。在编译之前，对你的实验是否能够通过借用检查器做出假设；然后，检查你是否正确！</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="thinking-in-terms-of-lifetimes"></a></p>
+<h3 id="关系"><a class="header" href="#关系">关系</a></h3>
+<p>你需要指定生命周期参数的方式取决于你的函数正在做什么。例如，如果我们将 <code>longest</code> 函数的实现改为始终返回第一个参数而不是最长的字符串切片，我们就不需要在 <code>y</code> 参数上指定生命周期。以下代码将编译：</p>
+<figure class="listing">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
+    x
+}</code></pre>
+</figure>
+<p>我们为参数 <code>x</code> 和返回类型指定了生命周期参数 <code>'a</code>，但没有为参数 <code>y</code> 指定，因为 <code>y</code> 的生命周期与 <code>x</code> 的生命周期或返回值没有任何关系。</p>
+<p>从函数返回引用时，返回类型的生命周期参数需要与其中一个参数的生命周期参数匹配。如果返回的引用<em>不</em>指向其中一个参数，它必须指向在此函数内部创建的值。然而，这将是一个悬垂引用，因为该值将在函数结束时离开作用域。考虑这个无法编译的 <code>longest</code> 函数实现尝试：</p>
+<figure class="listing">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest(string1.as_str(), string2);
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
+    let result = String::from("really long string");
+    result.as_str()
+}</code></pre>
+</figure>
+<p>在这里，即使我们已经为返回类型指定了生命周期参数 <code>'a</code>，这个实现也无法编译，因为返回值的生命周期与参数的生命周期完全无关。这是我们得到的错误消息：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0515]: cannot return value referencing local variable `result`
+  --&gt; src/main.rs:11:5
+   |
+11 |     result.as_str()
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
+
+For more information about this error, try `rustc --explain E0515`.
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
+</code></pre>
+<p>问题在于 <code>result</code> 在 <code>longest</code> 函数结束时离开作用域并被清理掉。我们还试图从函数返回对 <code>result</code> 的引用。我们无法指定会改变悬垂引用的生命周期参数，Rust 也不允许我们创建悬垂引用。在这种情况下，最好的修复方法是返回拥有所有权的数据类型而不是引用，这样调用函数就负责清理该值。</p>
+<p>最终，生命周期语法是关于连接函数各种参数和返回值的生命周期的。一旦它们被连接起来，Rust 就有足够的信息来允许内存安全的操作，并禁止可能导致悬垂指针或以其他方式违反内存安全的操作。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="lifetime-annotations-in-struct-definitions"></a></p>
+<h3 id="在结构体定义中"><a class="header" href="#在结构体定义中">在结构体定义中</a></h3>
+<p>到目前为止，我们定义的结构体都持有拥有所有权的类型。我们可以定义持有引用的结构体，但在此情况下，我们需要在结构体定义的每个引用上添加生命周期注解。示例 10-24 有一个名为 <code>ImportantExcerpt</code> 的结构体，它持有一个字符串切片。</p>
+<figure class="listing" id="listing-10-24">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">struct ImportantExcerpt&lt;'a&gt; {
+    part: &amp;'a str,
+}
+
+fn main() {
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.').next().unwrap();
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+}</code></pre>
+<figcaption><a href="#listing-10-24">Listing 10-24</a>: 一个持有引用的结构体，需要生命周期注解</figcaption>
+</figure>
+<p>这个结构体有单个字段 <code>part</code>，它持有一个字符串切片，即一个引用。与泛型数据类型一样，我们在结构体名称后面的尖括号内声明泛型生命周期参数的名称，这样我们就可以在结构体定义的主体中使用该生命周期参数。此注解意味着 <code>ImportantExcerpt</code> 的实例不能比它在 <code>part</code> 字段中持有的引用存活得更久。</p>
+<p>这里的 <code>main</code> 函数创建了一个 <code>ImportantExcerpt</code> 结构体的实例，该实例持有对变量 <code>novel</code> 拥有的 <code>String</code> 的第一个句子的引用。<code>novel</code> 中的数据在 <code>ImportantExcerpt</code> 实例创建之前就已存在。此外，<code>novel</code> 在 <code>ImportantExcerpt</code> 离开作用域之后才离开作用域，因此 <code>ImportantExcerpt</code> 实例中的引用是有效的。</p>
+<h3 id="生命周期省略lifetime-elision"><a class="header" href="#生命周期省略lifetime-elision">生命周期省略（Lifetime Elision）</a></h3>
+<p>你已经了解到每个引用都有一个生命周期，并且你需要为使用引用的函数或结构体指定生命周期参数。然而，我们在示例 4-9 中有一个函数（在示例 10-25 中再次展示），它在没有生命周期注解的情况下编译通过了。</p>
+<figure class="listing" id="listing-10-25">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;str) -&gt; &amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[0..i];
+        }
+    }
+
+    &amp;s[..]
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let my_string = String::from("hello world");
+</span><span class="boring">
+</span><span class="boring">    // first_word works on slices of `String`s
+</span><span class="boring">    let word = first_word(&amp;my_string[..]);
+</span><span class="boring">
+</span><span class="boring">    let my_string_literal = "hello world";
+</span><span class="boring">
+</span><span class="boring">    // first_word works on slices of string literals
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
+</span><span class="boring">
+</span><span class="boring">    // Because string literals *are* string slices already,
+</span><span class="boring">    // this works too, without the slice syntax!
+</span><span class="boring">    let word = first_word(my_string_literal);
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-10-25">Listing 10-25</a>: 我们在示例 4-9 中定义的函数，它在没有生命周期注解的情况下编译通过，尽管参数和返回类型都是引用</figcaption>
+</figure>
+<p>这个函数在没有生命周期注解的情况下编译通过的原因是有历史原因的：在 Rust 的早期版本（pre-1.0）中，这段代码无法编译，因为每个引用都需要显式的生命周期。那时，函数签名将写成这样：</p>
+<pre><code class="language-rust ignore">fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {</code></pre>
+<p>在编写了大量 Rust 代码之后，Rust 团队发现 Rust 程序员在特定情况下反复输入相同的生命周期注解。这些情况是可预测的，并遵循一些确定性的模式。开发者将这些模式编程到编译器的代码中，以便借用检查器在这些情况下可以推断出生命周期，而不需要显式注解。</p>
+<p>这段 Rust 历史是相关的，因为将来可能会出现更多确定性的模式并添加到编译器中。在未来，可能需要的生命周期注解会更少。</p>
+<p>编程到 Rust 的引用分析中的模式被称为<em>生命周期省略规则（lifetime elision rules）</em>。这些不是程序员要遵循的规则；它们是编译器会考虑的一组特定情况，如果你的代码符合这些情况，你就不需要显式地编写生命周期。</p>
+<p>省略规则并不提供完整的推断。如果应用这些规则后，引用的生命周期仍然存在歧义，编译器不会猜测剩余引用的生命周期应该是什么。编译器不会猜测，而是会给你一个错误，你可以通过添加生命周期注解来解决。</p>
+<p>函数或方法参数上的生命周期被称为<em>输入生命周期（input lifetimes）</em>，而返回值上的生命周期被称为<em>输出生命周期（output lifetimes）</em>。</p>
+<p>编译器使用三条规则来确定引用在没有显式注解时的生命周期。第一条规则适用于输入生命周期，第二和第三条规则适用于输出生命周期。如果编译器执行完三条规则后，仍然有它无法确定生命周期的引用，编译器将报错停止。这些规则适用于 <code>fn</code> 定义以及 <code>impl</code> 块。</p>
+<p>第一条规则是编译器为每个引用参数分配一个生命周期参数。换句话说，有一个参数的函数得到一个生命周期参数：<code>fn foo&lt;'a&gt;(x: &amp;'a i32)</code>；有两个参数的函数得到两个独立的生命周期参数：<code>fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code>；以此类推。</p>
+<p>第二条规则是，如果只有一个输入生命周期参数，该生命周期被分配给所有输出生命周期参数：<code>fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</code>。</p>
+<p>第三条规则是，如果有多个输入生命周期参数，但其中一个是 <code>&amp;self</code> 或 <code>&amp;mut self</code>（因为这是一个方法），则 <code>self</code> 的生命周期被分配给所有输出生命周期参数。第三条规则使得方法更易于读写，因为需要的符号更少。</p>
+<p>让我们假装我们是编译器。我们将应用这些规则来确定示例 10-25 中 <code>first_word</code> 函数签名中引用的生命周期。签名开始时没有任何与引用关联的生命周期：</p>
+<pre><code class="language-rust ignore">fn first_word(s: &amp;str) -&gt; &amp;str {</code></pre>
+<p>然后，编译器应用第一条规则，该规则指定每个参数获得自己的生命周期。我们照常称之为 <code>'a</code>，所以现在的签名是这样的：</p>
+<pre><code class="language-rust ignore">fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;str {</code></pre>
+<p>第二条规则适用，因为只有一个输入生命周期。第二条规则指定一个输入参数的生命周期被分配给输出生命周期，所以现在的签名是这样的：</p>
+<pre><code class="language-rust ignore">fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {</code></pre>
+<p>现在这个函数签名中的所有引用都有了生命周期，编译器可以继续其分析，而无需程序员在此函数签名中标注生命周期。</p>
+<p>让我们再看一个例子，这次是我们在示例 10-20 中开始使用的没有生命周期参数的 <code>longest</code> 函数：</p>
+<pre><code class="language-rust ignore">fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {</code></pre>
+<p>让我们应用第一条规则：每个参数获得自己的生命周期。这次我们有两个参数而不是一个，所以我们有两个生命周期：</p>
+<pre><code class="language-rust ignore">fn longest&lt;'a, 'b&gt;(x: &amp;'a str, y: &amp;'b str) -&gt; &amp;str {</code></pre>
+<p>你可以看到第二条规则不适用，因为有不止一个输入生命周期。第三条规则也不适用，因为 <code>longest</code> 是一个函数而不是方法，所以没有一个参数是 <code>self</code>。在应用了所有三条规则之后，我们仍然没有弄清楚返回类型的生命周期是什么。这就是为什么我们在尝试编译示例 10-20 中的代码时得到一个错误：编译器按照生命周期省略规则进行了处理，但仍然无法确定签名中所有引用的生命周期。</p>
+<p>因为第三条规则实际上只适用于方法签名，所以我们接下来将看看方法中的生命周期上下文，以了解为什么第三条规则意味着我们不必经常在方法签名中标注生命周期。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="lifetime-annotations-in-method-definitions"></a></p>
+<h3 id="在方法定义中"><a class="header" href="#在方法定义中">在方法定义中</a></h3>
+<p>当我们在具有生命周期的结构体上实现方法时，我们使用与泛型类型参数相同的语法，如示例 10-11 所示。我们在哪里声明和使用生命周期参数取决于它们是与结构体字段相关，还是与方法参数和返回值相关。</p>
+<p>结构体字段的生命周期名称始终需要在 <code>impl</code> 关键字之后声明，然后在结构体名称之后使用，因为这些生命周期是结构体类型的一部分。</p>
+<p>在 <code>impl</code> 块内部的方法签名中，引用可能被绑定到结构体字段中的引用的生命周期，或者它们可能是独立的。此外，生命周期省略规则通常使得在方法签名中不需要生命周期注解。让我们看一些使用我们在示例 10-24 中定义的 <code>ImportantExcerpt</code> 结构体的例子。</p>
+<p>首先，我们将使用一个名为 <code>level</code> 的方法，其唯一参数是对 <code>self</code> 的引用，其返回值是 <code>i32</code>，不是对任何东西的引用：</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn level(&amp;self) -&gt; i32 {
+        3
+    }
+}
+<span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+</span><span class="boring">        println!("Attention please: {announcement}");
+</span><span class="boring">        self.part
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let novel = String::from("Call me Ishmael. Some years ago...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().unwrap();
+</span><span class="boring">    let i = ImportantExcerpt {
+</span><span class="boring">        part: first_sentence,
+</span><span class="boring">    };
+</span><span class="boring">}</span></code></pre>
+<p><code>impl</code> 之后的生命周期参数声明及其在类型名称后的使用是必需的，但由于第一条省略规则，我们不需要标注对 <code>self</code> 的引用的生命周期。</p>
+<p>这是一个第三条生命周期省略规则适用的例子：</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">    fn level(&amp;self) -&gt; i32 {
+</span><span class="boring">        3
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+        println!("Attention please: {announcement}");
+        self.part
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let novel = String::from("Call me Ishmael. Some years ago...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().unwrap();
+</span><span class="boring">    let i = ImportantExcerpt {
+</span><span class="boring">        part: first_sentence,
+</span><span class="boring">    };
+</span><span class="boring">}</span></code></pre>
+<p>有两个输入生命周期，因此 Rust 应用第一条生命周期省略规则，并为 <code>&amp;self</code> 和 <code>announcement</code> 分别赋予自己的生命周期。然后，因为其中一个参数是 <code>&amp;self</code>，返回类型获得 <code>&amp;self</code> 的生命周期，现在所有生命周期都已确定。</p>
+<h3 id="静态生命周期static-lifetime"><a class="header" href="#静态生命周期static-lifetime">静态生命周期（Static Lifetime）</a></h3>
+<p>我们需要讨论的一个特殊生命周期是 <code>'static</code>，它表示受影响的引用<em>可以</em>在整个程序期间存活。所有字符串字面量（string literals）都具有 <code>'static</code> 生命周期，我们可以如下标注：</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s: &amp;'static str = "I have a static lifetime.";
+<span class="boring">}</span></code></pre>
+<p>该字符串的文本直接存储在程序的二进制文件中，始终可用。因此，所有字符串字面量的生命周期都是 <code>'static</code>。</p>
+<p>你可能会在错误消息中看到建议使用 <code>'static</code> 生命周期。但在将 <code>'static</code> 指定为引用的生命周期之前，请考虑该引用是否真的在整个程序的生命周期内都存在，以及你是否希望如此。大多数情况下，建议使用 <code>'static</code> 生命周期的错误消息是由尝试创建悬垂引用或可用生命周期不匹配导致的。在这种情况下，解决方案是修复这些问题，而不是指定 <code>'static</code> 生命周期。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="generic-type-parameters-trait-bounds-and-lifetimes-together"></a></p>
+<h2 id="泛型类型参数trait-约束与生命周期"><a class="header" href="#泛型类型参数trait-约束与生命周期">泛型类型参数、Trait 约束与生命周期</a></h2>
+<p>让我们简要地看一下在一个函数中指定泛型类型参数、trait 约束和生命周期的语法！</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
+</span><span class="boring">
+</span><span class="boring">    let result = longest_with_an_announcement(
+</span><span class="boring">        string1.as_str(),
+</span><span class="boring">        string2,
+</span><span class="boring">        "Today is someone's birthday!",
+</span><span class="boring">    );
+</span><span class="boring">    println!("The longest string is {result}");
+</span><span class="boring">}
+</span><span class="boring">
+</span>use std::fmt::Display;
+
+fn longest_with_an_announcement&lt;'a, T&gt;(
+    x: &amp;'a str,
+    y: &amp;'a str,
+    ann: T,
+) -&gt; &amp;'a str
+where
+    T: Display,
+{
+    println!("Announcement! {ann}");
+    if x.len() &gt; y.len() { x } else { y }
+}</code></pre>
+<p>这是示例 10-21 中的 <code>longest</code> 函数，它返回两个字符串切片中较长的那个。但现在它有一个额外的参数 <code>ann</code>，类型为泛型 <code>T</code>，可以由任何实现了 <code>Display</code> trait 的类型填充（由 <code>where</code> 子句指定）。这个额外的参数将使用 <code>{}</code> 打印，这就是为什么 <code>Display</code> trait 约束是必需的。因为生命周期是一种泛型，所以生命周期参数 <code>'a</code> 和泛型类型参数 <code>T</code> 的声明放在函数名称后面尖括号内的同一个列表中。</p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>我们在本章中涵盖了很多内容！现在你已经了解了泛型类型参数、trait 和 trait 约束以及泛型生命周期参数，你已经准备好编写没有重复且在许多不同情况下工作的代码了。泛型类型参数让你可以将代码应用于不同的类型。Trait 和 trait 约束确保即使类型是泛型的，它们也具有代码所需的行为。你学习了如何使用生命周期注解来确保灵活的代码不会出现悬垂引用。而所有这些分析都在编译时进行，不会影响运行时性能！</p>
+<p>信不信由你，关于我们在本章中讨论的主题，还有很多需要学习：第 18 章讨论了 trait 对象，这是使用 trait 的另一种方式。还有一些涉及生命周期注解的更复杂场景，你只在非常高级的场景中才需要；对于这些，你应该阅读 <a href="../reference/trait-bounds.html">Rust 参考手册</a>。但接下来，你将学习如何在 Rust 中编写测试，以便确保你的代码按预期工作。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch10-02-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch11-00-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch10-02-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch11-00-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>重构以改进模块化与错误处理 - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-b61d7e59.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-d88af4f5.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="重构以改善模块化和错误处理refactoring-to-improve-modularity-and-error-handling"><a class="header" href="#重构以改善模块化和错误处理refactoring-to-improve-modularity-and-error-handling">重构以改善模块化和错误处理（Refactoring to Improve Modularity and Error Handling）</a></h2>
+<p>为了改进我们的程序，我们将解决与程序结构以及处理潜在错误方式相关的四个问题。首先，我们的 <code>main</code> 函数现在执行两个任务：解析参数和读取文件。随着程序增长，<code>main</code> 函数处理的不同任务数量将会增加。随着一个函数承担越来越多的职责，它变得更加难以推理、更难以测试、更难以在不破坏其某个部分的情况下进行更改。最好将功能分开，使每个函数只负责一项任务。</p>
+<p>此问题也与第二个问题相关：虽然 <code>query</code> 和 <code>file_path</code> 是我们程序的配置变量，但像 <code>contents</code> 这样的变量用于执行程序的逻辑。<code>main</code> 越长，我们需要引入作用域的变量就越多；作用域中的变量越多，就越难跟踪每个变量的用途。最好将配置变量分组到一个结构中，以明确它们的用途。</p>
+<p>第三个问题是，我们在读取文件失败时使用了 <code>expect</code> 来打印错误消息，但错误消息只打印了 <code>Should have been able to read the file</code>。读取文件可能以多种方式失败：例如，文件可能缺失，或者我们可能没有权限打开文件。目前，无论情况如何，我们都会为所有情况打印相同的错误消息，这不会给用户任何信息！</p>
+<p>第四，我们使用 <code>expect</code> 来处理错误，如果用户运行我们的程序时未指定足够的参数，他们将得到一个来自 Rust 的 <code>index out of bounds</code> 错误，这并没有清楚地解释问题。最好将所有错误处理代码放在一个地方，这样如果错误处理逻辑需要更改，未来的维护者只需查阅代码的一个地方。将所有错误处理代码放在一个地方也将确保我们打印的消息对最终用户有意义。</p>
+<p>让我们通过重构项目来解决这四个问题。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="separation-of-concerns-for-binary-projects"></a></p>
+<h3 id="分离二进制项目的关注点"><a class="header" href="#分离二进制项目的关注点">分离二进制项目的关注点</a></h3>
+<p>将多个任务的职责分配给 <code>main</code> 函数的组织问题在许多二进制项目中都很常见。因此，许多 Rust 程序员发现，当 <code>main</code> 函数开始变得庞大时，将二进制程序的不同关注点分开是很有用的。此过程包含以下步骤：</p>
+<ul>
+<li>将程序拆分为 <em>main.rs</em> 文件和 <em>lib.rs</em> 文件，并将程序的逻辑移到 <em>lib.rs</em> 中。</li>
+<li>只要你的命令行解析逻辑很小，它可以保留在 <code>main</code> 函数中。</li>
+<li>当命令行解析逻辑开始变得复杂时，将其从 <code>main</code> 函数提取到其他函数或类型中。</li>
+</ul>
+<p>在此过程之后，<code>main</code> 函数中保留的职责应限于以下内容：</p>
+<ul>
+<li>使用参数值调用命令行解析逻辑</li>
+<li>设置任何其他配置</li>
+<li>调用 <em>lib.rs</em> 中的 <code>run</code> 函数</li>
+<li>如果 <code>run</code> 返回错误，则处理该错误</li>
+</ul>
+<p>这种模式是关于分离关注点：<em>main.rs</em> 处理运行程序，<em>lib.rs</em> 处理手头任务的所有逻辑。因为你无法直接测试 <code>main</code> 函数，这种结构通过将程序的所有逻辑移出 <code>main</code> 函数，使你可以测试所有逻辑。<code>main</code> 函数中保留的代码将足够小，可以通过阅读来验证其正确性。让我们按照此过程重新组织我们的程序。</p>
+<h4 id="提取参数解析器"><a class="header" href="#提取参数解析器">提取参数解析器</a></h4>
+<p>我们将提取解析参数的功能到一个 <code>main</code> 将调用的函数中。示例 12-5 显示了 <code>main</code> 函数的新开头，它调用了一个新的 <code>parse_config</code> 函数，我们将在 <em>src/main.rs</em> 中定义。</p>
+<figure class="listing" id="listing-12-5">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let (query, file_path) = parse_config(&amp;args);
+
+    // --snip--
+<span class="boring">
+</span><span class="boring">    println!("Searching for {query}");
+</span><span class="boring">    println!("In file {file_path}");
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span>}
+
+fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
+    let query = &amp;args[1];
+    let file_path = &amp;args[2];
+
+    (query, file_path)
+}</code></pre>
+<figcaption><a href="#listing-12-5">Listing 12-5</a>: 从 <code>main</code> 提取一个 <code>parse_config</code> 函数</figcaption>
+</figure>
+<p>我们仍然将命令行参数收集到一个向量中，但不再在 <code>main</code> 函数中将索引 1 处的参数值赋给变量 <code>query</code>、将索引 2 处的参数值赋给变量 <code>file_path</code>，而是将整个向量传递给 <code>parse_config</code> 函数。<code>parse_config</code> 函数随后包含确定哪个参数进入哪个变量的逻辑，并将值传递回 <code>main</code>。我们仍然在 <code>main</code> 中创建 <code>query</code> 和 <code>file_path</code> 变量，但 <code>main</code> 不再负责确定命令行参数和变量之间的对应关系。</p>
+<p>这种重写对于我们的小程序来说可能看起来有点小题大做，但我们正在以小的、递增的步骤进行重构。在进行此更改后，再次运行程序以验证参数解析仍然有效。经常检查你的进度是很好的做法，以帮助在出现问题时识别原因。</p>
+<h4 id="分组配置值"><a class="header" href="#分组配置值">分组配置值</a></h4>
+<p>我们可以再采取一小步来进一步改进 <code>parse_config</code> 函数。目前，我们返回一个元组，但随后我们立即将该元组再次分解为各个部分。这是一个迹象，表明我们可能还没有正确的抽象。</p>
+<p>另一个表明有改进空间的指标是 <code>parse_config</code> 名称中的 <code>config</code> 部分，它暗示我们返回的两个值是相关的，并且都是一个配置值的两个部分。我们目前没有在数据结构中传达这种含义，除了将两个值分组到元组中；相反，我们将把这两个值放入一个结构体中，并给每个结构体字段一个有意义的名称。这样做将使未来代码的维护者更容易理解不同值之间的关系以及它们的用途。</p>
+<p>示例 12-6 显示了 <code>parse_config</code> 函数的改进。</p>
+<figure class="listing" id="listing-12-6">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust should_panic noplayground"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = parse_config(&amp;args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    // --snip--
+<span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span>}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+fn parse_config(args: &amp;[String]) -&gt; Config {
+    let query = args[1].clone();
+    let file_path = args[2].clone();
+
+    Config { query, file_path }
+}</code></pre>
+<figcaption><a href="#listing-12-6">Listing 12-6</a>: 重构 <code>parse_config</code> 以返回 <code>Config</code> 结构体的实例</figcaption>
+</figure>
+<p>我们添加了一个名为 <code>Config</code> 的结构体，其字段名为 <code>query</code> 和 <code>file_path</code>。<code>parse_config</code> 的签名现在表明它返回一个 <code>Config</code> 值。在 <code>parse_config</code> 的函数体中，我们之前返回引用 <code>args</code> 中 <code>String</code> 值的字符串切片，现在我们定义 <code>Config</code> 包含拥有所有权的 <code>String</code> 值。<code>main</code> 中的 <code>args</code> 变量是参数值的所有者，并且只让 <code>parse_config</code> 函数借用它们，这意味着如果 <code>Config</code> 试图获取 <code>args</code> 中值的所有权，我们将违反 Rust 的借用规则。</p>
+<p>有几种方法可以管理 <code>String</code> 数据；最简单（虽然效率略低）的方法是在值上调用 <code>clone</code> 方法。这将为 <code>Config</code> 实例制作数据的完整副本以供其拥有，这比存储对字符串数据的引用需要更多时间和内存。然而，克隆数据也使我们的代码非常直接，因为我们不必管理引用的生命周期；在这种情况下，牺牲一点性能来换取简单性是一个值得的权衡。</p>
+<section class="note" aria-role="note">
+<h3 id="使用-clone-的权衡"><a class="header" href="#使用-clone-的权衡">使用 <code>clone</code> 的权衡</a></h3>
+<p>许多 Rustaceans 倾向于避免使用 <code>clone</code> 来解决所有权问题，因为它有运行时成本。在<a href="ch13-00-functional-features.html">第 13 章</a><!-- ignore -->中，你将学习如何在类似情况下使用更高效的方法。但现在，复制几个字符串以继续前进是可以的，因为你只会复制一次，而且你的文件路径和查询字符串非常小。拥有一个虽然效率略低但可以工作的程序，比在第一次尝试时就过度优化代码要好。随着你对 Rust 越来越有经验，更容易从最有效的解决方案开始，但现在，调用 <code>clone</code> 是完全可接受的。</p>
+</section>
+<p>我们已经更新了 <code>main</code>，使其将通过 <code>parse_config</code> 返回的 <code>Config</code> 实例放入名为 <code>config</code> 的变量中，并更新了之前使用单独的 <code>query</code> 和 <code>file_path</code> 变量的代码，使其现在改为使用 <code>Config</code> 结构体的字段。</p>
+<p>现在我们的代码更清晰地传达了 <code>query</code> 和 <code>file_path</code> 是相关的，并且它们的目的是配置程序将如何工作。任何使用这些值的代码都知道在 <code>config</code> 实例的字段中找到它们，这些字段以它们的用途命名。</p>
+<h4 id="为-config-创建构造函数"><a class="header" href="#为-config-创建构造函数">为 <code>Config</code> 创建构造函数</a></h4>
+<p>到目前为止，我们已经将从 <code>main</code> 解析命令行参数的逻辑提取出来，并放入 <code>parse_config</code> 函数中。这样做帮助我们看到了 <code>query</code> 和 <code>file_path</code> 值是相关的，并且这种关系应该在代码中传达。然后，我们添加了一个 <code>Config</code> 结构体来命名 <code>query</code> 和 <code>file_path</code> 的相关用途，并能够从 <code>parse_config</code> 函数中将值的名称作为结构体字段名返回。</p>
+<p>所以，既然 <code>parse_config</code> 函数的目的是创建一个 <code>Config</code> 实例，我们可以将 <code>parse_config</code> 从一个普通函数更改为一个与 <code>Config</code> 结构体关联的名为 <code>new</code> 的函数。进行此更改将使代码更符合惯例（idiomatic）。我们可以通过调用 <code>String::new</code> 来创建标准库中类型（如 <code>String</code>）的实例。类似地，通过将 <code>parse_config</code> 更改为与 <code>Config</code> 关联的 <code>new</code> 函数，我们将能够通过调用 <code>Config::new</code> 来创建 <code>Config</code> 实例。示例 12-7 显示了我们需要做的更改。</p>
+<figure class="listing" id="listing-12-7">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust should_panic noplayground"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
+</span>fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::new(&amp;args);
+<span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span>
+    // --snip--
+}
+
+// --snip--
+
+<span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Config {
+    fn new(args: &amp;[String]) -&gt; Config {
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Config { query, file_path }
+    }
+}</code></pre>
+<figcaption><a href="#listing-12-7">Listing 12-7</a>: 将 <code>parse_config</code> 改为 <code>Config::new</code></figcaption>
+</figure>
+<p>我们已经更新了 <code>main</code>，将调用 <code>parse_config</code> 的地方改为调用 <code>Config::new</code>。我们将 <code>parse_config</code> 的名称改为 <code>new</code>，并将其移到 <code>impl</code> 块中，这将 <code>new</code> 函数与 <code>Config</code> 关联起来。再次编译此代码以确保其正常工作。</p>
+<h3 id="修复错误处理"><a class="header" href="#修复错误处理">修复错误处理</a></h3>
+<p>现在我们来修复错误处理。回想一下，如果 <code>args</code> 向量包含少于三个项，尝试访问索引 1 或索引 2 处的值会导致程序 panic。尝试不带任何参数运行程序；它将如下所示：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep`
+
+thread 'main' panicked at src/main.rs:27:21:
+index out of bounds: the len is 1 but the index is 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+<p><code>index out of bounds: the len is 1 but the index is 1</code> 这一行是面向程序员的错误消息。它不会帮助我们的最终用户理解他们应该怎么做。让我们现在修复它。</p>
+<h4 id="改进错误消息"><a class="header" href="#改进错误消息">改进错误消息</a></h4>
+<p>在示例 12-8 中，我们在 <code>new</code> 函数中添加了一个检查，用于在访问索引 1 和索引 2 之前验证切片是否足够长。如果切片不够长，程序会 panic 并显示更好的错误消息。</p>
+<figure class="listing" id="listing-12-8">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::new(&amp;args);
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span>    // --snip--
+    fn new(args: &amp;[String]) -&gt; Config {
+        if args.len() &lt; 3 {
+            panic!("not enough arguments");
+        }
+        // --snip--
+<span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Config { query, file_path }
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-12-8">Listing 12-8</a>: 添加参数数量的检查</figcaption>
+</figure>
+<p>这段代码类似于<a href="ch09-03-to-panic-or-not-to-panic.html#creating-custom-types-for-validation">我们在示例 9-13 中编写的 <code>Guess::new</code> 函数</a><!-- ignore -->，当 <code>value</code> 参数超出有效值范围时，我们调用了 <code>panic!</code>。这里我们不是检查值的范围，而是检查 <code>args</code> 的长度是否至少为 <code>3</code>，函数的其余部分可以在假定此条件已满足的情况下运行。如果 <code>args</code> 少于三个项，此条件将为 <code>true</code>，我们调用 <code>panic!</code> 宏立即结束程序。</p>
+<p>在 <code>new</code> 中添加这几行代码后，让我们再次不带任何参数运行程序，看看现在的错误是什么样子：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep`
+
+thread 'main' panicked at src/main.rs:26:13:
+not enough arguments
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+<p>这个输出更好：现在我们有了一个合理的错误消息。但是，我们还有一些不想给用户的无关信息。也许我们在示例 9-13 中使用的技术不是这里的最佳选择：调用 <code>panic!</code> 更适合编程问题而不是使用问题，<a href="ch09-03-to-panic-or-not-to-panic.html#guidelines-for-error-handling">正如第 9 章中讨论的那样</a><!-- ignore -->。相反，我们将使用你在第 9 章中学到的另一种技术——<a href="ch09-02-recoverable-errors-with-result.html">返回一个 <code>Result</code></a><!-- ignore -->，它表示成功或错误。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="returning-a-result-from-new-instead-of-calling-panic"></a></p>
+<h4 id="返回-result-而不是调用-panic"><a class="header" href="#返回-result-而不是调用-panic">返回 <code>Result</code> 而不是调用 <code>panic!</code></a></h4>
+<p>我们可以改为返回一个 <code>Result</code> 值，在成功情况下包含一个 <code>Config</code> 实例，在错误情况下描述问题。我们还打算将函数名称从 <code>new</code> 改为 <code>build</code>，因为许多程序员期望 <code>new</code> 函数永远不会失败。当 <code>Config::build</code> 与 <code>main</code> 通信时，我们可以使用 <code>Result</code> 类型来指示存在问题。然后，我们可以更改 <code>main</code>，将 <code>Err</code> 变体转换为对用户更实用的错误，而不包含 <code>panic!</code> 调用带来的 <code>thread 'main'</code> 和 <code>RUST_BACKTRACE</code> 等周围文本。</p>
+<p>示例 12-9 显示了我们现在称为 <code>Config::build</code> 的函数的返回值以及函数体返回 <code>Result</code> 所需的更改。请注意，在更新 <code>main</code> 之前，这将无法编译，我们将在下一个示例中执行此操作。</p>
+<figure class="listing" id="listing-12-9">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::new(&amp;args);
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Config {
+    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+        if args.len() &lt; 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}</code></pre>
+<figcaption><a href="#listing-12-9">Listing 12-9</a>: 从 <code>Config::build</code> 返回 <code>Result</code></figcaption>
+</figure>
+<p>我们的 <code>build</code> 函数返回一个 <code>Result</code>，在成功情况下包含 <code>Config</code> 实例，在错误情况下包含字符串字面量。我们的错误值将始终是具有 <code>'static</code> 生命周期的字符串字面量。</p>
+<p>我们在函数体中做了两处更改：当用户没有传递足够的参数时，我们现在返回一个 <code>Err</code> 值，而不是调用 <code>panic!</code>，并且我们将 <code>Config</code> 返回值包裹在 <code>Ok</code> 中。这些更改使函数符合其新的类型签名。</p>
+<p>从 <code>Config::build</code> 返回 <code>Err</code> 值允许 <code>main</code> 函数处理从 <code>build</code> 函数返回的 <code>Result</code> 值，并在错误情况下更干净地退出进程。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="calling-confignew-and-handling-errors"></a></p>
+<h4 id="调用-configbuild-并处理错误"><a class="header" href="#调用-configbuild-并处理错误">调用 <code>Config::build</code> 并处理错误</a></h4>
+<p>为了处理错误情况并打印用户友好的消息，我们需要更新 <code>main</code> 以处理 <code>Config::build</code> 返回的 <code>Result</code>，如示例 12-10 所示。我们还将从 <code>panic!</code> 中移除以非零错误代码退出命令行工具的责任，并改为手动实现。非零退出状态是一种约定，通知调用我们程序的进程程序以错误状态退出。</p>
+<figure class="listing" id="listing-12-10">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span>use std::process;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    // --snip--
+<span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)
+</span><span class="boring">        .expect("Should have been able to read the file");
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-12-10">Listing 12-10</a>: 如果在构建 <code>Config</code> 时失败，则以错误代码退出</figcaption>
+</figure>
+<p>在此示例中，我们使用了一个尚未详细介绍的方法：<code>unwrap_or_else</code>，它由标准库在 <code>Result&lt;T, E&gt;</code> 上定义。使用 <code>unwrap_or_else</code> 允许我们定义一些自定义的、非 <code>panic!</code> 的错误处理。如果 <code>Result</code> 是 <code>Ok</code> 值，此方法的行为类似于 <code>unwrap</code>：它返回 <code>Ok</code> 包装的内部值。然而，如果值是 <code>Err</code> 值，此方法会调用闭包中的代码——闭包是我们定义并作为参数传递给 <code>unwrap_or_else</code> 的匿名函数。我们将在<a href="ch13-00-functional-features.html">第 13 章</a><!-- ignore -->更详细地介绍闭包。现在，你只需要知道 <code>unwrap_or_else</code> 会将 <code>Err</code> 的内部值（在本例中是我们添加在示例 12-9 中的静态字符串 <code>"not enough arguments"</code>）传递给我们闭包中竖线之间的参数 <code>err</code>。然后闭包中的代码可以在运行时使用 <code>err</code> 值。</p>
+<p>我们添加了一个新的 <code>use</code> 行，将标准库中的 <code>process</code> 引入作用域。在错误情况下运行的闭包代码只有两行：我们打印 <code>err</code> 值，然后调用 <code>process::exit</code>。<code>process::exit</code> 函数将立即停止程序并返回作为退出状态码传入的数字。这与我们在示例 12-8 中使用的基于 <code>panic!</code> 的处理类似，但我们不再获得所有额外的输出。让我们尝试一下：</p>
+<pre><code class="language-console">$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/minigrep`
+Problem parsing arguments: not enough arguments
+</code></pre>
+<p>很好！这个输出对我们的用户友好得多。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="extracting-logic-from-the-main-function"></a></p>
+<h3 id="从-main-提取逻辑"><a class="header" href="#从-main-提取逻辑">从 <code>main</code> 提取逻辑</a></h3>
+<p>既然我们已经完成了配置解析的重构，让我们转向程序的逻辑。正如我们在<a href="#separation-of-concerns-for-binary-projects">“分离二进制项目的关注点”</a><!-- ignore -->中所说的，我们将提取一个名为 <code>run</code> 的函数，该函数将包含 <code>main</code> 函数中当前所有不涉及设置配置或处理错误的逻辑。完成后，<code>main</code> 函数将简洁且易于通过检查验证，我们将能够为所有其他逻辑编写测试。</p>
+<p>示例 12-11 显示了提取 <code>run</code> 函数的微小增量改进。</p>
+<figure class="listing" id="listing-12-11">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>fn main() {
+    // --snip--
+
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span>    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    run(config);
+}
+
+fn run(config: Config) {
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}
+
+// --snip--
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-12-11">Listing 12-11</a>: 提取包含其余程序逻辑的 <code>run</code> 函数</figcaption>
+</figure>
+<p><code>run</code> 函数现在包含 <code>main</code> 中的剩余逻辑，从读取文件开始。<code>run</code> 函数将 <code>Config</code> 实例作为参数。</p>
+<!-- Old headings. Do not remove or links may break. -->
+<p><a id="returning-errors-from-the-run-function"></a></p>
+<h4 id="从-run-返回错误"><a class="header" href="#从-run-返回错误">从 <code>run</code> 返回错误</a></h4>
+<p>将剩余的程序逻辑分离到 <code>run</code> 函数后，我们可以改进错误处理，就像我们在示例 12-9 中对 <code>Config::build</code> 所做的那样。<code>run</code> 函数不会通过调用 <code>expect</code> 来允许程序 panic，而是在出现问题时返回一个 <code>Result&lt;T, E&gt;</code>。这将使我们能够进一步将处理错误的逻辑以用户友好的方式整合到 <code>main</code> 中。示例 12-12 显示了我们需要对 <code>run</code> 的签名和主体进行的更改。</p>
+<figure class="listing" id="listing-12-12">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span>use std::error::Error;
+
+// --snip--
+
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span><span class="boring">    println!("Searching for {}", config.query);
+</span><span class="boring">    println!("In file {}", config.file_path);
+</span><span class="boring">
+</span><span class="boring">    run(config);
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    println!("With text:\n{contents}");
+
+    Ok(())
+}
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-12-12">Listing 12-12</a>: 将 <code>run</code> 函数改为返回 <code>Result</code></figcaption>
+</figure>
+<p>我们在这里做了三个重要更改。首先，我们将 <code>run</code> 函数的返回类型更改为 <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code>。此函数之前返回单元类型 <code>()</code>，我们保持该值作为 <code>Ok</code> 情况下的返回值。</p>
+<p>对于错误类型，我们使用了 trait 对象 <code>Box&lt;dyn Error&gt;</code>（并且我们在顶部使用 <code>use</code> 语句将 <code>std::error::Error</code> 引入作用域）。我们将在<a href="ch18-00-oop.html">第 18 章</a><!-- ignore -->介绍 trait 对象。现在，只需知道 <code>Box&lt;dyn Error&gt;</code> 意味着该函数将返回一个实现了 <code>Error</code> trait 的类型，但我们不必指定返回值将是哪种特定类型。这为我们提供了灵活性，可以在不同的错误情况下返回可能不同类型的错误值。<code>dyn</code> 关键字是 <em>dynamic</em> 的缩写。</p>
+<p>其次，我们移除了对 <code>expect</code> 的调用，转而使用 <code>?</code> 运算符，正如我们在<a href="ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator">第 9 章</a><!-- ignore -->中讨论的那样。<code>?</code> 不会在错误时 <code>panic!</code>，而是从当前函数返回错误值供调用者处理。</p>
+<p>第三，<code>run</code> 函数现在在成功情况下返回一个 <code>Ok</code> 值。我们已经在签名中声明了 <code>run</code> 函数的成功类型为 <code>()</code>，这意味着我们需要将单元类型值包裹在 <code>Ok</code> 值中。这种 <code>Ok(())</code> 语法一开始可能看起来有点奇怪。但像这样使用 <code>()</code> 是一种符合惯例的方式，表明我们调用 <code>run</code> 只是为了它的副作用；它不返回我们需要的结果值。</p>
+<p>当你运行此代码时，它将编译但会显示一个警告：</p>
+<pre><code class="language-console">$ cargo run -- the poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+warning: unused `Result` that must be used
+  --&gt; src/main.rs:19:5
+   |
+19 |     run(config);
+   |     ^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+19 |     let _ = run(config);
+   |     +++++++
+
+warning: `minigrep` (bin "minigrep") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.71s
+     Running `target/debug/minigrep the poem.txt`
+Searching for the
+In file poem.txt
+With text:
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+
+</code></pre>
+<p>Rust 告诉我们，我们的代码忽略了 <code>Result</code> 值，而 <code>Result</code> 值可能表示发生了错误。但我们没有检查是否发生了错误，编译器提醒我们这里可能应该有一些错误处理代码！让我们现在纠正这个问题。</p>
+<h4 id="在-main-中处理从-run-返回的错误"><a class="header" href="#在-main-中处理从-run-返回的错误">在 <code>main</code> 中处理从 <code>run</code> 返回的错误</a></h4>
+<p>我们将检查错误并使用与我们在示例 12-10 中对 <code>Config::build</code> 使用的类似技术来处理它们，但略有不同：</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>fn main() {
+    // --snip--
+
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span>    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+}
+<span class="boring">
+</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
+</span><span class="boring">
+</span><span class="boring">    println!("With text:\n{contents}");
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<p>我们使用 <code>if let</code> 而不是 <code>unwrap_or_else</code> 来检查 <code>run</code> 是否返回 <code>Err</code> 值，如果返回则调用 <code>process::exit(1)</code>。<code>run</code> 函数不像 <code>Config::build</code> 返回 <code>Config</code> 实例那样返回我们想要 <code>unwrap</code> 的值。因为 <code>run</code> 在成功情况下返回 <code>()</code>，我们只关心检测错误，所以我们不需要 <code>unwrap_or_else</code> 来返回解包的值（那将只是 <code>()</code>）。</p>
+<p><code>if let</code> 和 <code>unwrap_or_else</code> 的函数体在两种情况下是相同的：我们打印错误并退出。</p>
+<h3 id="将代码拆分为库-crate"><a class="header" href="#将代码拆分为库-crate">将代码拆分为库 Crate</a></h3>
+<p>我们的 <code>minigrep</code> 项目目前看起来不错！现在我们将拆分 <em>src/main.rs</em> 文件，并将一些代码放入 <em>src/lib.rs</em> 文件中。这样，我们可以测试代码，并且 <em>src/main.rs</em> 文件的职责更少。</p>
+<p>让我们在 <em>src/lib.rs</em> 中定义负责搜索文本的代码，而不是在 <em>src/main.rs</em> 中，这将使我们（或任何其他使用我们 <code>minigrep</code> 库的人）能够从比我们的 <code>minigrep</code> 二进制文件更多的上下文中调用搜索函数。</p>
+<p>首先，在 <em>src/lib.rs</em> 中定义 <code>search</code> 函数的签名，如示例 12-13 所示，其函数体调用 <code>unimplemented!</code> 宏。我们将在填写实现时更详细地解释签名。</p>
+<figure class="listing" id="listing-12-13">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust ignore does_not_compile">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    unimplemented!();
+}</code></pre>
+<figcaption><a href="#listing-12-13">Listing 12-13</a>: 在 <em>src/lib.rs</em> 中定义 <code>search</code> 函数</figcaption>
+</figure>
+<p>我们在函数定义上使用了 <code>pub</code> 关键字，将 <code>search</code> 指定为库 crate 公共 API 的一部分。现在我们有了一个库 crate，可以从二进制 crate 中使用它，并且可以测试它！</p>
+<p>现在，我们需要将在 <em>src/lib.rs</em> 中定义的代码引入二进制 crate <em>src/main.rs</em> 的作用域并调用它，如示例 12-14 所示。</p>
+<figure class="listing" id="listing-12-14">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>// --snip--
+use minigrep::search;
+
+fn main() {
+    // --snip--
+<span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
+</span><span class="boring">
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">        println!("Problem parsing arguments: {err}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    });
+</span><span class="boring">
+</span><span class="boring">    if let Err(e) = run(config) {
+</span><span class="boring">        println!("Application error: {e}");
+</span><span class="boring">        process::exit(1);
+</span><span class="boring">    }
+</span>}
+
+// --snip--
+
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("not enough arguments");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    for line in search(&amp;config.query, &amp;contents) {
+        println!("{line}");
+    }
+
+    Ok(())
+}</code></pre>
+<figcaption><a href="#listing-12-14">Listing 12-14</a>: 在 <em>src/main.rs</em> 中使用 <code>minigrep</code> 库 crate 的 <code>search</code> 函数</figcaption>
+</figure>
+<p>我们添加了一行 <code>use minigrep::search;</code>，将 <code>search</code> 函数从库 crate 引入二进制 crate 的作用域。然后，在 <code>run</code> 函数中，我们不再打印文件的内容，而是调用 <code>search</code> 函数并传递 <code>config.query</code> 值和 <code>contents</code> 作为参数。然后，<code>run</code> 将使用 <code>for</code> 循环打印从 <code>search</code> 返回的匹配查询的每一行。这也是一个很好的时机来移除 <code>main</code> 函数中显示查询和文件路径的 <code>println!</code> 调用，这样我们的程序只打印搜索结果（如果没有发生错误）。</p>
+<p>注意，搜索函数将在任何打印发生之前将所有结果收集到一个向量中返回。这种实现在搜索大文件时显示结果可能会很慢，因为结果不会在找到时立即打印；我们将在第 13 章讨论使用迭代器解决此问题的可能方法。</p>
+<p>唷！这是大量的工作，但我们为未来的成功奠定了基础。现在处理错误容易得多，而且我们已经使代码更加模块化。从现在开始，我们几乎所有的工作将在 <em>src/lib.rs</em> 中完成。</p>
+<p>让我们利用这种新获得的模块化性来做一些旧代码难以做到但新代码容易做到的事情：我们将编写一些测试！</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch12-02-reading-a-file.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12-04-testing-the-librarys-functionality.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch12-02-reading-a-file.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12-04-testing-the-librarys-functionality.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
