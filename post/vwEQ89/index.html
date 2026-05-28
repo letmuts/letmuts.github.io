@@ -27,12 +27,17 @@
   })();
 </script>
   <meta name="generator" content="Gridea Pro 1.2.1">
-  <title>#rust | 樱木有枝</title>
+  <title>编译Codewhale的Windows on Arm（ARM64）版本 | 樱木有枝</title>
   
-<meta name="description" content="Welcome to My Blog">
+<meta property="og:title" content="编译Codewhale的Windows on Arm（ARM64）版本" />
+<meta property="og:type" content="article" />
+
+
+<meta name="description" content="构建编译Codewhale的Windows on Arm版本的教程">
 <meta name="keywords" content="个人博客">
-<link rel="canonical" href="https://sakuraflows.github.io/tag/rust/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"樱木有枝","url":"https://sakuraflows.github.io","description":"Welcome to My Blog","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":"https://sakuraflows.github.io/search?q={search_term_string}"}}</script>
+<link rel="canonical" href="https://sakuraflows.github.io/post/vwEQ89/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"编译Codewhale的Windows on Arm（ARM64）版本","url":"https://sakuraflows.github.io/post/vwEQ89/","description":"构建编译Codewhale的Windows on Arm版本的教程","datePublished":"2026-05-22T03:28:30+08:00","dateModified":"2026-05-29T00:01:48+08:00","author":{"@type":"Person","name":"樱木有枝"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"樱木有枝"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://sakuraflows.github.io","name":"樱木有枝","position":1},{"@type":"ListItem","item":"https://sakuraflows.github.io/post/vwEQ89/","name":"编译Codewhale的Windows on Arm（ARM64）版本","position":2}]}</script>
 <!-- Clarity tracking code for https://sakuraflows.github.io/ -->
 <script>
     (function(c,l,a,r,i,t,y){
@@ -166,64 +171,134 @@
 
   <main class="site-main" role="main">
     
-<div class="container">
-  <div class="page-header">
-    <a href="/tags" class="page-back meta-text">&larr; 所有标签</a>
-    <h1 class="page-title"><span class="page-title__hash">#</span>rust</h1>
-    
-    <p class="page-subtitle meta-text">共 2 篇文章</p>
-    
-  </div>
-
-  
-  <div class="post-list">
-    
-    <article class="post-card post-card--list">
-  <div class="post-card__body">
-    <a href="/post/vwEQ89/" class="post-card__title-link">
-      <h3 class="post-card__title clamp-3">编译Codewhale的Windows on Arm（ARM64）版本</h3>
-    </a>
-    <a href="/post/vwEQ89/" class="post-card__excerpt clamp-2">
-      构建编译Codewhale的Windows on Arm版本的教程
-
-如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub仓库中，并没有提供wina...
-    </a>
-    <div class="post-card__meta meta-text">
-      2026-05-22
+<article class="article-container">
+  <header class="article-header">
+    <h1 class="article-title">编译Codewhale的Windows on Arm（ARM64）版本</h1>
+    <div class="article-meta">
+      
+      
+      <a href="/category/default/" class="article-meta__category">默认分类</a>
+      
+      
+      <span class="article-meta__sep">·</span>
+      
+      <span class="article-meta__item">2026-05-22</span>
+      
+      <span class="article-meta__sep">·</span>
+      <span class="article-meta__item">5 分钟阅读</span>
       
     </div>
-  </div>
-  
-</article>
-
     
-    <article class="post-card post-card--list">
-  <div class="post-card__body">
-    <a href="/post/start-rust-on-windows/" class="post-card__title-link">
-      <h3 class="post-card__title clamp-3">在Windows上入门Rust的第一步</h3>
-    </a>
-    <a href="/post/start-rust-on-windows/" class="post-card__excerpt clamp-2">
-      本文包含
-
-如何在windows上安装rust
-配置vscode+git+deepseek的全套运行开发环境
-入门教程推荐。
-
-1.下载rust及其所需的组件
-前往官网页面下载rust：https://rust-lang.org/zh...
-    </a>
-    <div class="post-card__meta meta-text">
-      2026-05-16
+    <div class="article-header__tags">
+      
+      <a href="/tag/rust/" class="tag-pill tag-pill--sm">rust</a>
       
     </div>
-  </div>
-  
-</article>
-
     
-  </div>
+  </header>
+
   
-</div>
+
+  <div class="article-content">
+    <!-- more -->
+<p>构建编译Codewhale的Windows on Arm版本的教程</p>
+<!-- more -->
+<p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub<a href="https://github.com/Hmbown/Codewhale">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，Codewhale其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
+<p>当然，你也可以到我的仓库当中下载已经编译好的二进制exe：<br />
+<a href="https://github.com/sakuraflows/codewhale_winarm">https://github.com/sakuraflows/codewhale_winarm</a></p>
+<h3 id="heading">问题：</h3>
+<p>cd到仓库目录，执行<code>cargo build --release</code>,出现如下报错：</p>
+<pre><code>
+
+warning: aws-lc-sys@0.41.0: Environment Variable found 'CARGO_ENCODED_RUSTFLAGS': ''
+warning: aws-lc-sys@0.41.0: Emitting configuration: cargo:rustc-cfg=universal
+warning: aws-lc-sys@0.41.0: Building with: CC
+warning: aws-lc-sys@0.41.0: Symbol Prefix: Some(&quot;aws_lc_0_41_0&quot;)
+warning: aws-lc-sys@0.41.0: Target platform: 'aarch64-pc-windows-msvc'
+warning: aws-lc-sys@0.41.0: Windows ARM64 (aarch64-pc-windows-msvc) requires clang-cl. Install the 'C++ Clang Compiler for Windows' component in Visual Studio Build Tools, or set CC to a working clang-cl. See User Guide: https://aws.github.io/aws-lc-rs/index.html
+warning: aws-lc-sys@0.41.0: Compilation of 'stdalign_check.c' failed - Err(Error { kind: ToolExecError, message: &quot;command did not execute successfully (status code exit code: 2): \&quot;C:\\\\Program Files\\\\Microsoft Visual 
+。。。。。
+warning: build failed, waiting for other jobs to finish...
+error: failed to compile `deepseek-tui v0.8.39`, intermediate artifacts can be found at `C:\Users\***\AppData\Local\Temp\cargo-installuYij5Y`.
+To reuse those artifacts with a future compilation, set the environment variable `CARGO_BUILD_BUILD_DIR` to that path.
+</code></pre>
+<p>从报错中可以看出，问题出在<code>aws-lc-sys</code>这个<code>crate</code>的编译上。我的系统是Windows ARM64 (aarch64-pc-windows-msvc)，而aws-lc-sys编译所需的ARM汇编文件（.S）和某些 GCC/Clang专有选项（如 -march=armv8.4-a+sha3），微软的 MSVC 编译器（cl.exe）无法处理。</p>
+<p>这属于Rust编译不便的经典问题了,但其实锅也不能让Rust全背.而且编译器里都已经给你写出来问题出在哪里了.</p>
+<h3 id="heading-1">解决方案</h3>
+<p>这里给出两种方案,供大家选择,我使用的是方案一:</p>
+<p>首先,无论使用哪种方案,你都要安装rust.关于安装rust的教程,请参看<a href="https://sakuraflows.github.io/post/start-rust-on-windows/">在Windows上入门Rust的第一步</a></p>
+<h4 id="visual-studio-installer-">方案一:Visual Studio Installer 添加组件</h4>
+<p>此方案较简单,但安装的依赖较多.</p>
+<p>首先要下载如下内容:</p>
+<ul>
+<li><a href="https://github.com/Hmbown/Codewhale">Codewhale</a></li>
+<li>下载并安装rust</li>
+<li>下载visual studio installer</li>
+</ul>
+<p>然后打开vs installer&mdash;&ndash;单个组件,安装如下组件:</p>
+<ul>
+<li>适用于x64/x86的MSVC生成工具（最新版）</li>
+<li>适用于ARM64/ARM64EC的MSVC生成工具</li>
+<li>适用于Windows的C++Clang 编译器</li>
+<li>Windows 11 SDK</li>
+</ul>
+<p>cd到你下载的Codewhale源码路径,然后执行<code>cargo build --release</code>,输出的编译结果会提示你编译好的exe所在的路径.</p>
+<p>或者你直接运行<code>cargo install Codewhale</code>也可以,cargo会为你配置一切,这样做你就可以直接打开powershell执行<code>codewhale</code>就可以使用了.</p>
+<h4 id="-llvm-clang-cl">方法二：单独安装 LLVM（包含 clang-cl）</h4>
+<p>此方案较复杂,但此方案使用的是开源工具链,编译出的二进制可以应用于商业环境中,而不必担心通过微软visualstudioinstaller安装build tools造成的可能侵权的问题.(当然你前期配置rust环境也要使用gun工具链)</p>
+<p>首先需前往<a href="github.com/llvm/llvm-project">llvm project</a>,在release中下载<code>clang+llvm-22.1.6-aarch64-pc-windows-msvc.tar</code>.</p>
+<p>将压缩包解压,确保<code>bin\\clang-cl.exe</code>存在.</p>
+<p>现在有两个小方案:<br />
+1.直接在设备上安装Codewhale:<br />
+临时设置变量</p>
+<pre><code>$env:CC = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin\clang-cl.exe&quot;
+$env:CXX = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin\clang-cl.exe&quot;
+$env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 可选，方便 clang-cl 被调用
+</code></pre>
+<p>执行:<code>cargo clean</code>和<code>cargo install</code></p>
+<br>
+<br>
+<p>2.或者可以先克隆<a href="https://github.com/Hmbown/DeepSeek-TUI">deepseektui</a>源代码,cd到下载目录,执行<code>cargo build --release</code>.</p>
+<p>完成.</p>
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+<!-- more -->
+  </div>
+
+  
+  <nav class="post-nav">
+    
+    <div class="post-nav-card post-nav-card--empty">
+      <div class="post-nav-card__body">
+        <span class="post-nav-card__label meta-text">上一篇</span>
+        <span class="post-nav-card__empty-text">没有上一篇了~</span>
+      </div>
+    </div>
+    
+    
+    <a href="/post/start-rust-on-windows/" class="post-nav-card post-nav-card--next">
+      <div class="post-nav-card__body">
+        <span class="post-nav-card__label meta-text">下一篇</span>
+        <span class="post-nav-card__title">在Windows上入门Rust的第一步</span>
+      </div>
+      
+      <span class="post-nav-card__arrow">&rarr;</span>
+    </a>
+    
+  </nav>
+
+  
+  
+
+
+</article>
 
   </main>
 
