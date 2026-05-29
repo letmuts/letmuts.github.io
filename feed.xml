@@ -6,7 +6,7 @@
     <description>Welcome to My Blog</description>
     <language>zh-cn</language>
     <generator>Gridea Pro</generator>
-    <lastBuildDate>Fri, 29 May 2026 06:23:24 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2026 07:26:43 +0800</lastBuildDate>
     <atom:link href="https://sakuraflows.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <item>
       <title>解决Rust Cargo:Missing manifest in toolchain xxx报错.</title>
@@ -150,7 +150,7 @@ $env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 
 <p>在windows上，rust默认采用的是MSVC 工具链（Microsoft Visual C++），因此在安装完后还要安装MSVC 工具链.</p>
 <br>
 <ul>
-<li>为rust换源：<br />
+<li>为cargo换源：<br />
 打开windows终端（powershell），输入如下指令，使用记事本打开cargo的配置文件：<br />
 <code>notepad $env:USERPROFILE\.cargo\config.toml</code><br />
 如果显示该路径不存在或没有此文件的话，那就先创建文件之后再进行编辑。或者执行<code>mkdir -p $env:USERPROFILE\.cargo</code>.<br />
@@ -162,8 +162,16 @@ replace-with = 'ustc'
 [source.ustc]
 registry = &quot;sparse+https://mirrors.ustc.edu.cn/crates.io-index/&quot;
 </code></pre>
-<p>我使用的是中科大的镜像源，你也可以去网上找其他的镜像源。<br />
-换源完成。</p>
+<p>我使用的是中科大的镜像源，你也可以去网上找其他的镜像源。</p>
+<ul>
+<li>为rustup换源</li>
+</ul>
+<p>按 Win + R，输入 <code>sysdm.cpl</code> 回车 → 点击 “高级” → “环境变量”。<br />
+在“用户变量”或“系统变量”中点击“新建”：<br />
+变量名：<code>RUSTUP_DIST_SERVER</code>，变量值：<code>https://mirrors.ustc.edu.cn/rust-static</code><br />
+变量名：<code>RUSTUP_UPDATE_ROOT</code>，变量值：<code>https://mirrors.ustc.edu.cn/rust-static/rustup</code><br />
+确认后，重新打开终端窗口即可生效。</p>
+<p>换源完成。</p>
 <h5 id="24msvc">2.4安装MSVC以及必要的依赖组件</h5>
 <p>打开你在visual studio官网上下载的visual studio安装程序,选择“单个组件”<br />
 勾选如下工具:<br />
@@ -605,7 +613,7 @@ aoeo.eu.org</p>
 <li>碎碎念</li>
 </ul>
 <h3 id="heading-2">友链</h3>
-<p>如果你希望与我结缘的话，请写邮件给我.</p>
+<p>如果你希望与我结缘的话，请写邮件或在&quot;关于&quot;页面的下方给我评论.</p>
 <h3 id="heading-3">找到我</h3>
 <ul>
 <li>GitHub: <a href="https://github.com/sakuraflows">Sakuraflows</a></li>

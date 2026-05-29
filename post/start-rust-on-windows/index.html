@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="/favicon.ico?v=1780010085">
+<link rel="shortcut icon" href="/favicon.ico?v=1780063348">
 <link rel="stylesheet" href="/styles/main.css">
 
 
@@ -24,7 +24,7 @@
   <meta name="description" content="本文包含 如何在windows上安装rust 配置vscode+git+deepseek的全套运行开发环境 入门教程推荐。">
 <meta name="keywords" content="个人博客">
 <link rel="canonical" href="https://sakuraflows.github.io/post/start-rust-on-windows/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在Windows上入门Rust的第一步","url":"https://sakuraflows.github.io/post/start-rust-on-windows/","description":"本文包含 如何在windows上安装rust 配置vscode+git+deepseek的全套运行开发环境 入门教程推荐。","datePublished":"2026-05-16T04:27:57+08:00","dateModified":"2026-05-29T00:56:49+08:00","author":{"@type":"Person","name":"Letmut"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"Letmut"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在Windows上入门Rust的第一步","url":"https://sakuraflows.github.io/post/start-rust-on-windows/","description":"本文包含 如何在windows上安装rust 配置vscode+git+deepseek的全套运行开发环境 入门教程推荐。","datePublished":"2026-05-16T04:27:57+08:00","dateModified":"2026-05-29T21:34:56+08:00","author":{"@type":"Person","name":"Letmut"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"Letmut"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://sakuraflows.github.io","name":"Letmut","position":1},{"@type":"ListItem","item":"https://sakuraflows.github.io/post/start-rust-on-windows/","name":"在Windows上入门Rust的第一步","position":2}]}</script>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -41,7 +41,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="/">
-        <img src="/images/avatar.png?v=1780010085" class="site-logo">
+        <img src="/images/avatar.png?v=1780063348" class="site-logo">
         <h1 class="site-title">Letmut</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -53,12 +53,6 @@
         
           <a href="/" class="site-nav">
             首页
-          </a>
-        
-      
-        
-          <a href="/post" class="site-nav">
-            博客
           </a>
         
       
@@ -164,7 +158,7 @@
 <p>在windows上，rust默认采用的是MSVC 工具链（Microsoft Visual C++），因此在安装完后还要安装MSVC 工具链.</p>
 <br>
 <ul>
-<li>为rust换源：<br />
+<li>为cargo换源：<br />
 打开windows终端（powershell），输入如下指令，使用记事本打开cargo的配置文件：<br />
 <code>notepad $env:USERPROFILE\.cargo\config.toml</code><br />
 如果显示该路径不存在或没有此文件的话，那就先创建文件之后再进行编辑。或者执行<code>mkdir -p $env:USERPROFILE\.cargo</code>.<br />
@@ -176,8 +170,16 @@ replace-with = 'ustc'
 [source.ustc]
 registry = &quot;sparse+https://mirrors.ustc.edu.cn/crates.io-index/&quot;
 </code></pre>
-<p>我使用的是中科大的镜像源，你也可以去网上找其他的镜像源。<br />
-换源完成。</p>
+<p>我使用的是中科大的镜像源，你也可以去网上找其他的镜像源。</p>
+<ul>
+<li>为rustup换源</li>
+</ul>
+<p>按 Win + R，输入 <code>sysdm.cpl</code> 回车 → 点击 “高级” → “环境变量”。<br />
+在“用户变量”或“系统变量”中点击“新建”：<br />
+变量名：<code>RUSTUP_DIST_SERVER</code>，变量值：<code>https://mirrors.ustc.edu.cn/rust-static</code><br />
+变量名：<code>RUSTUP_UPDATE_ROOT</code>，变量值：<code>https://mirrors.ustc.edu.cn/rust-static/rustup</code><br />
+确认后，重新打开终端窗口即可生效。</p>
+<p>换源完成。</p>
 <h5 id="24msvc">2.4安装MSVC以及必要的依赖组件</h5>
 <p>打开你在visual studio官网上下载的visual studio安装程序,选择“单个组件”<br />
 勾选如下工具:<br />
