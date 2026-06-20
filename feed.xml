@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Letmut</title>
-    <link>https://sakuraflows.github.io/</link>
+    <link>https://letmuts.github.io/</link>
     <description>Welcome to My Blog</description>
     <language>zh-cn</language>
     <generator>Gridea Pro</generator>
     <lastBuildDate>Fri, 29 May 2026 07:26:43 +0800</lastBuildDate>
-    <atom:link href="https://sakuraflows.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
+    <atom:link href="https://letmuts.github.io/feed.xml" rel="self" type="application/rss+xml"></atom:link>
     <item>
       <title>解决Rust Cargo:Missing manifest in toolchain xxx报错.</title>
-      <link>https://sakuraflows.github.io/post/6zuzrR/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/6zuzrR/</guid>
+      <link>https://letmuts.github.io/post/6zuzrR/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/6zuzrR/</guid>
       <pubDate>Fri, 29 May 2026 13:52:21 +0800</pubDate>
       <description><![CDATA[<p>在执行cargo install时,有时会碰到Missing manifest in toolchain xxx的报错.本文提供修复这类错误的一个思路.</p>
 <!-- more -->
@@ -38,8 +38,8 @@ error: Missing manifest in toolchain '1.90-aarch64-pc-windows-msvc'
     </item>
     <item>
       <title>编译Codewhale的Windows on Arm（ARM64）版本</title>
-      <link>https://sakuraflows.github.io/post/vwEQ89/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/vwEQ89/</guid>
+      <link>https://letmuts.github.io/post/vwEQ89/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/vwEQ89/</guid>
       <pubDate>Fri, 22 May 2026 03:28:30 +0800</pubDate>
       <description><![CDATA[<p>构建编译Codewhale的Windows on Arm版本的教程</p>
 <!-- more -->
@@ -114,8 +114,8 @@ $env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 
     </item>
     <item>
       <title>在Windows上入门Rust的第一步</title>
-      <link>https://sakuraflows.github.io/post/start-rust-on-windows/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/start-rust-on-windows/</guid>
+      <link>https://letmuts.github.io/post/start-rust-on-windows/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/start-rust-on-windows/</guid>
       <pubDate>Sat, 16 May 2026 04:27:57 +0800</pubDate>
       <description><![CDATA[<h5 id="heading">本文包含</h5>
 <ul>
@@ -232,8 +232,8 @@ Rust 的升级非常频繁。如果您安装 Rustup 后已有一段时间，那�
     </item>
     <item>
       <title>华为Matebook E Go （8cx Gen3）不完全使用教程（长期更新）</title>
-      <link>https://sakuraflows.github.io/post/matebookguide1/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/matebookguide1/</guid>
+      <link>https://letmuts.github.io/post/matebookguide1/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/matebookguide1/</guid>
       <pubDate>Wed, 06 May 2026 10:01:09 +0800</pubDate>
       <description><![CDATA[<p>作为一台搭载骁龙8cx Gen3的二合一设备来说，它的性能即使放到现在来说也不算过时。又因为windows on arm的对ARM支持的不断改善（25H2已支持对部分AVX指令集的兼容），以及本身的特殊特性（ARM特有的超长续航、二合一触控手写），个人认为它在今天也具有非常好的可玩性和相当的实用性。</p>
 <br>
@@ -425,8 +425,8 @@ Microsoft Visual C++2013(12.0.40664.0)
     </item>
     <item>
       <title>ARM下WSL2编译可运行waydroid的WSL2（ARM）内核</title>
-      <link>https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/</guid>
+      <link>https://letmuts.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/</guid>
       <pubDate>Wed, 06 May 2026 01:50:16 +0800</pubDate>
       <description><![CDATA[<p>编译WSL2编译可运行waydroid的WSL2（ARM）内核</p>
 <!-- more -->
@@ -516,8 +516,8 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
     </item>
     <item>
       <title>MateBook E Go 2023性能版防止长时间睡眠后进入休眠状态</title>
-      <link>https://sakuraflows.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/</guid>
+      <link>https://letmuts.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/matebook-e-go-2023xing-neng-ban-fang-zhi-chang-shi-jian-shui-mian-hou-jin-ru-xiu-mian-zhuang-tai/</guid>
       <pubDate>Wed, 06 May 2026 01:31:11 +0800</pubDate>
       <description><![CDATA[<p>MateBook E Go 2023性能版防止长时间睡眠后进入休眠状态</p>
 <!-- more -->
@@ -592,8 +592,8 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
     </item>
     <item>
       <title>关于</title>
-      <link>https://sakuraflows.github.io/post/about/</link>
-      <guid isPermaLink="true">https://sakuraflows.github.io/post/about/</guid>
+      <link>https://letmuts.github.io/post/about/</link>
+      <guid isPermaLink="true">https://letmuts.github.io/post/about/</guid>
       <pubDate>Wed, 06 May 2026 00:16:40 +0800</pubDate>
       <description><![CDATA[<p>首先，要感谢<a href="https://github.com/Gridea-Pro/gridea-pro">Gridea Pro</a>以及源项目 <a href="https://github.com/getgridea/gridea">Gridea</a>的创造者，是他们无私的贡献才能让无数人得以以近乎零门槛创建自己的博客；也让我省去了大量的构建与部署的时间。在此向他们以及所有开源者致敬。</p>
 <h3 id="heading">关于我和我的博客</h3>
