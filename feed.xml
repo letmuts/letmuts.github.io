@@ -45,7 +45,7 @@ error: Missing manifest in toolchain '1.90-aarch64-pc-windows-msvc'
 <!-- more -->
 <p>如题：最近我打算在我的matebook e go，一台win on arm的设备上写代码。但突然发现，在Codewhale的GitHub<a href="https://github.com/Hmbown/Codewhale">仓库</a>中，并没有提供winarm版本。于是我决定自己进行编译。作为Rust项目，Codewhale其实还是很好编译的。但其实也有很多小坑。笔者把编译当中遇到的问题记在这里。</p>
 <p>当然，你也可以到我的仓库当中下载已经编译好的二进制exe：<br />
-<a href="https://github.com/sakuraflows/codewhale_winarm">https://github.com/sakuraflows/codewhale_winarm</a></p>
+<a href="https://github.com/letmuts/codewhale_winarm">https://github.com/letmuts/codewhale_winarm</a></p>
 <h3 id="heading">问题：</h3>
 <p>cd到仓库目录，执行<code>cargo build --release</code>,出现如下报错：</p>
 <pre><code>
@@ -100,16 +100,7 @@ $env:PATH = &quot;C:\Users\fulde\projects\Codewhale\llvm\bin;$env:PATH&quot;  # 
 <br>
 <p>2.或者可以先克隆<a href="https://github.com/Hmbown/DeepSeek-TUI">deepseektui</a>源代码,cd到下载目录,执行<code>cargo build --release</code>.</p>
 <p>完成.</p>
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->
-<!-- more -->]]></description>
+]]></description>
       <category>rust</category>
     </item>
     <item>
@@ -222,7 +213,7 @@ Rust 的升级非常频繁。如果您安装 Rustup 后已有一段时间，那�
 <h3 id="4-">4 推荐教程</h3>
 <p>入门教程推荐：</p>
 <p><a href="https://kaisery.github.io/trpl-zh-cn/title-page.html">Rust 程序设计语言</a><br />
-或者如果访问有问题的话（没问题的话我为什么要自己重新部署..），你可以访问我自己部署的页面：<a href="https://sakuraflows.github.io/rustbook/title-page.html">Rust 程序设计语言</a></p>
+或者如果访问有问题的话（没问题的话我为什么要自己重新部署..），你可以访问我自己部署的页面：<a href="https://letmuts.github.io/rustbook/title-page.html">Rust 程序设计语言</a></p>
 <p>参考：<br />
 <a href="https://zhuanlan.zhihu.com/p/678846997">Rust，msvc工具链最小安装，VisualStudio Installer里怎么选</a><br />
 <a href="https://github.com/Vizards/deepseek-v4-for-copilot/blob/main/README.zh-cn.md">VScode插件 DeepSeek V4 for Copilot Chat</a><br />
@@ -616,7 +607,7 @@ aoeo.eu.org</p>
 <p>如果你希望与我结缘的话，请写邮件或在&quot;关于&quot;页面的下方给我评论.</p>
 <h3 id="heading-3">找到我</h3>
 <ul>
-<li>GitHub: <a href="https://github.com/sakuraflows">Sakuraflows</a></li>
+<li>GitHub: <a href="https://github.com/letmuts">Letmuts</a></li>
 <li>Email: <a href="mailto:aoeo@aoeo.eu.org">aoeo@aoeo.eu.org</a></li>
 </ul>
 <h3 id="heading-4">隐私说明</h3>
