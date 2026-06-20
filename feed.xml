@@ -423,7 +423,7 @@ Microsoft Visual C++2013(12.0.40664.0)
 <!-- more -->
 <p>应该也适用于linux下编译可运行waydroid的WSL2（ARM）内核吧&hellip;</p>
 <p>假设你不想编译直接用的话，我的仓库里面有一份编译好的：<br />
-<a href="https://github.com/sakuraflows/wsl2-linuxkernel-arm-build/releases">https://github.com/sakuraflows/wsl2-linuxkernel-arm-build/releases</a></p>
+<a href="https://github.com/letmuts/wsl2-linuxkernel-arm-build/releases">https://github.com/letmuts/wsl2-linuxkernel-arm-build/releases</a></p>
 <p>背景介绍：<br />
 waydroid可以让linux运行安卓程序，但在运行waydroid必须要对内核进行配置。因此想要在WSL2上运行waydroid，就必须使用自己编译的内核和自己编译内核所对应的模块文件。</p>
 <p>linux kernel可以选择不同的发行版系统，我使用的是Ubuntu 24.04.</p>

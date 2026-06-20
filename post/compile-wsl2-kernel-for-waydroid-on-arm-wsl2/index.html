@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="/favicon.ico?v=1781965584">
+<link rel="shortcut icon" href="/favicon.ico?v=1781965677">
 <link rel="stylesheet" href="/styles/main.css">
 
 
@@ -24,15 +24,8 @@
   <meta name="description" content="编译WSL2编译可运行waydroid的WSL2（ARM）内核">
 <meta name="keywords" content="个人博客">
 <link rel="canonical" href="https://letmuts.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ARM下WSL2编译可运行waydroid的WSL2（ARM）内核","url":"https://letmuts.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/","description":"编译WSL2编译可运行waydroid的WSL2（ARM）内核","datePublished":"2026-05-06T01:50:16+08:00","dateModified":"2026-05-29T00:56:55+08:00","author":{"@type":"Person","name":"Letmut"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"Letmut"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ARM下WSL2编译可运行waydroid的WSL2（ARM）内核","url":"https://letmuts.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/","description":"编译WSL2编译可运行waydroid的WSL2（ARM）内核","datePublished":"2026-05-06T01:50:16+08:00","dateModified":"2026-06-20T22:26:56+08:00","author":{"@type":"Person","name":"Letmut"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"Letmut"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://letmuts.github.io","name":"Letmut","position":1},{"@type":"ListItem","item":"https://letmuts.github.io/post/compile-wsl2-kernel-for-waydroid-on-arm-wsl2/","name":"ARM下WSL2编译可运行waydroid的WSL2（ARM）内核","position":2}]}</script>
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wmh9rbripm");
-</script>
 </head>
   <body>
     <div id="app" class="main">
@@ -41,7 +34,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="/">
-        <img src="/images/avatar.png?v=1781965584" class="site-logo">
+        <img src="/images/avatar.png?v=1781965677" class="site-logo">
         <h1 class="site-title">Letmut</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -129,7 +122,7 @@
 <!-- more -->
 <p>应该也适用于linux下编译可运行waydroid的WSL2（ARM）内核吧&hellip;</p>
 <p>假设你不想编译直接用的话，我的仓库里面有一份编译好的：<br />
-<a href="https://github.com/sakuraflows/wsl2-linuxkernel-arm-build/releases">https://github.com/sakuraflows/wsl2-linuxkernel-arm-build/releases</a></p>
+<a href="https://github.com/letmuts/wsl2-linuxkernel-arm-build/releases">https://github.com/letmuts/wsl2-linuxkernel-arm-build/releases</a></p>
 <p>背景介绍：<br />
 waydroid可以让linux运行安卓程序，但在运行waydroid必须要对内核进行配置。因此想要在WSL2上运行waydroid，就必须使用自己编译的内核和自己编译内核所对应的模块文件。</p>
 <p>linux kernel可以选择不同的发行版系统，我使用的是Ubuntu 24.04.</p>
@@ -258,7 +251,7 @@ var app = new Vue({
   <!-- 评论区容器 - 使用 div 包裹并限制宽度 -->
 <div class="giscus-container">
     <script src="https://giscus.app/client.js"
-            data-repo="sakuraflows/gitalk-comments"
+            data-repo="letmutss/gitalk-comments"
             data-repo-id="R_kgDOSWB1fw"
             data-category="Announcements"
             data-category-id="DIC_kwDOSWB1f84C-C4D"
